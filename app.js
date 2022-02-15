@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 // import { message } from './controllers/socket';
-// const { instrument } = require('@socket.io/admin-ui');
+const { instrument } = require('@socket.io/admin-ui');
 
 const app = express();
 dotenv.config();
@@ -23,16 +23,16 @@ dotenv.config();
 // });
 
 // server with socket
-// const server = require('http').Server(app);
-// const io = require('socket.io')(server, {
-//   cors: {
-//     origin: '*',
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   },
-// });
-// instrument(io, {
-//   auth: false,
-// });
+const server = require('http').Server(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  },
+});
+instrument(io, {
+  auth: false,
+});
 
 // Router
 const authRouters = require('./routes/auth');
@@ -41,7 +41,6 @@ const authRouters = require('./routes/auth');
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log('DB Connected'));
