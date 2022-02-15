@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-// import { message } from './controllers/socket';
+import { message } from './controllers/socket';
 const { instrument } = require('@socket.io/admin-ui');
 
 const app = express();
@@ -57,7 +57,7 @@ app.use(
   })
 );
 
-// message(io);
+message(io);
 
 app.use('/api', authRouters);
 
