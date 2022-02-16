@@ -9,6 +9,17 @@
 //   });
 // });
 
+export const notification = (io, user) => {
+  io.on('connection', (socket) => {
+    socket.on('disconnect', () => {
+      console.log('disconnect');
+    });
+    socket.on('notifications', (data) => {
+      socket.emit('send-notifications', data);
+    });
+  });
+};
+
 export const message = (io) => {
   io.on('connection', (socket) => {
     socket.on('disconnect', () => {});
