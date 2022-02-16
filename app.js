@@ -36,6 +36,7 @@ instrument(io, {
 
 // Router
 const authRouters = require('./routes/auth');
+const serviceRouter = require('./routes/service');
 
 //db connection
 mongoose
@@ -60,6 +61,7 @@ app.use(
 message(io);
 
 app.use('/api', authRouters);
+app.use('/api', serviceRouter);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
