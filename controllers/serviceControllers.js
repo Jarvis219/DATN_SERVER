@@ -1,4 +1,4 @@
-import Service from '../model/serviceModel';
+import Service from '../models/serviceModel';
 import _ from 'lodash';
 
 export const listService = (req, res) => {
@@ -62,7 +62,7 @@ export const createService = (req, res) => {
 
 export const updateService = (req, res) => {
   let service = req.service;
-  service = _.assignIn(products, req.body);
+  service = _.assignIn(service, req.body);
 
   service.save((err, data) => {
     if (err) {
