@@ -16,13 +16,15 @@ export const listStaff = (req, res) => {
 };
 
 export const staffId = (req, res, next, id) => {
-  Staff.findById(id).exec((err, data) => {
-    if (err) {
-      return res.status(500).json({ Error: err });
-    }
-    req.staff = data;
-    next();
-  });
+  Staff.findById(id)
+    .populate('position_id', 'position_name')
+    .exec((err, data) => {
+      if (err) {
+        return res.status(500).json({ Error: err });
+      }
+      req.staff = data;
+      next();
+    });
 };
 
 export const readStaff = (req, res) => {

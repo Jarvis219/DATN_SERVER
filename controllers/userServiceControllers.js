@@ -19,13 +19,18 @@ export const listUserService = (req, res) => {
 };
 
 export const userServiceId = (req, res, next, id) => {
-  UserService.findById(id).exec((err, data) => {
-    if (err) {
-      return res.status(500).json({ Error: err });
-    }
-    req.userService = data;
-    next();
-  });
+  UserService.findById(id)
+    .populate(
+      'staff_id service_id user_id',
+      'staff_name user_id star service_name service_price service_sale service_star service_album category_id name photoURL phoneNumber email'
+    )
+    .exec((err, data) => {
+      if (err) {
+        return res.status(500).json({ Error: err });
+      }
+      req.userService = data;
+      next();
+    });
 };
 
 export const readUserService = (req, res) => {

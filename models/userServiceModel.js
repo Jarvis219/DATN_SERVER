@@ -15,7 +15,7 @@ const UserServiceSchema = new mongoose.Schema(
     service_id: {
       type: ObjectId,
       ref: 'Service',
-      // required: true,
+      required: true,
     },
     star: {
       type: Number,
@@ -59,11 +59,6 @@ const UserServiceSchema = new mongoose.Schema(
     },
     service_album: {
       type: Array,
-    },
-    category_id: {
-      type: ObjectId,
-      ref: 'Category',
-      // required: true,
     },
   },
   {
