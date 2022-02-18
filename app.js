@@ -41,6 +41,7 @@ const positionRouter = require('./routes/position');
 const staffRouter = require('./routes/staff');
 const userServiceRouter = require('./routes/userService');
 const serviceHistoryRouter = require('./routes/serviceHistory');
+const categoryRouter = require('./routes/category');
 
 //db connection
 mongoose
@@ -70,6 +71,7 @@ app.use('/api', positionRouter);
 app.use('/api', staffRouter);
 app.use('/api', userServiceRouter);
 app.use('/api', serviceHistoryRouter);
+app.use('/api', categoryRouter);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {

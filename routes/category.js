@@ -6,28 +6,28 @@ import {
   readCategory,
   removeCategory,
   updateCategory,
-  listCategoriesRelated
+  listCategoriesRelated,
 } from '../controllers/categoryControllers';
 
 const router = express.Router();
 
 //Danh sách danh mục
-router.get('/categories', listCategories);
+router.get('/list-category', listCategories);
 
 //Chi tiết danh mục
-router.get('/categories/:id', readCategory);
+router.get('/read-category/:id', readCategory);
 
 //Thêm mới danh mục
-router.post('/categories', createCategory);
+router.post('/create-category', createCategory);
 
 //Cập nhật danh mục
-router.put('/categories/:id', updateCategory);
+router.put('/update-category/:id', updateCategory);
 
 //Xoá danh mục
-router.delete('/categories/:id', removeCategory);
+router.delete('/remove-category/:id', removeCategory);
 
 //List Danh mục( ngoại trừ Danh mục hiện tại)
-router.get('/categories/related/:id', listCategoriesRelated);
+router.get('/list-category/related/:id', listCategoriesRelated);
 
 //Lấy param
 router.param('id', categoryId);
