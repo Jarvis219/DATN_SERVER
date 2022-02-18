@@ -6,7 +6,7 @@ export const listService = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('category', 'name')
+    .populate('category_id', 'name')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +17,7 @@ export const listService = (req, res) => {
 
 export const serviceId = (req, res, next, id) => {
   Service.findById(id)
-    .populate('category', 'name')
+    .populate('category_id', 'name')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -40,7 +40,7 @@ export const removeServices = (req, res) => {
       });
     }
     res.json({
-      message: 'Delete product successfully',
+      message: 'Delete service successfully',
     });
   });
 };
@@ -55,7 +55,7 @@ export const createService = (req, res) => {
     }
     res.json({
       data,
-      message: 'Create product successfully',
+      message: 'Create service successfully',
     });
   });
 };
@@ -86,7 +86,7 @@ export const listServiceRelated = (req, res) => {
     category: req.service.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate('category', '_id name')
+    .populate('category_id', '_id name')
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
@@ -110,7 +110,7 @@ export const listSearch = (req, res) => {
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
-          error: 'Product not found',
+          error: 'Service not found',
         });
       }
       res.json({ data });
