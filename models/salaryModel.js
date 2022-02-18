@@ -23,6 +23,36 @@ const SalarySchema = new mongoose.Schema(
       ref: 'WorkDay',
       required: true,
     },
+    overtime: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    holiday: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    weekend: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    insurance: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    personal_income_tax: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    bonus: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   {
     timestamps: true,
