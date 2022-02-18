@@ -6,7 +6,7 @@ export const listProduct = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('category', 'name')
+    .populate('category_id', 'name')
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -32,7 +32,7 @@ export const createProduct = (req, res) => {
 
 export const productId = (req, res, next, id) => {
   Product.findById(id)
-    .populate('category', 'name')
+    .populate('category_id', 'name')
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -51,7 +51,7 @@ export const removeProduct = (req, res) => {
   product.remove((err) => {
     if (err) {
       return res.status(400).json({
-        error: 'delete product failure',
+        error: 'Delete product failure',
       });
     }
     res.json({
@@ -86,7 +86,7 @@ export const listProductRelated = (req, res) => {
     category: req.product.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate('category', '_id name')
+    .populate('category_id', '_id name')
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
@@ -127,10 +127,9 @@ export const filterCategory = (req, res) => {
     if (err) {
       return res.status(400).json({
         err,
-        error: 'data does not exist',
+        error: 'Data does not exist',
       });
     }
     res.json({ data });
   });
 };
-
