@@ -42,6 +42,21 @@ export const removeUser = (req, res) => {
   });
 };
 
+export const createUser = (req, res) => {
+  const user = new User(req.body);
+  user.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    res.json({
+      data,
+      message: 'Create user successfully',
+    });
+  });
+};
+
 export const updateUser = (req, res) => {
   let user = req.user;
   user = _.assignIn(user, req.body);
@@ -61,10 +76,10 @@ export const updateUser = (req, res) => {
 
 export const searchUser = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
-  let user = req.query.user ? req.query.user : '';
+  let name = req.query.name ? req.query.name : '';
   User.find({
     name: {
-      $regex: `${user}`,
+      $regex: `${name}`,
       $options: '$i',
     },
   })
