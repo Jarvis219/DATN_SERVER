@@ -7,8 +7,8 @@ const UserSchema = new mongoose.Schema(
   {
     email: {
       type: String,
-      unique: true,
       trim: true,
+      default: '',
     },
     uid: {
       required: true,
@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       maxLength: 50,
+      default: 'guest',
     },
     photoURL: {
       type: String,
