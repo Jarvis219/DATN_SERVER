@@ -2,11 +2,6 @@ import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 const StaffSchema = new mongoose.Schema(
   {
-    staff_name: {
-      type: String,
-      required: true,
-      maxLength: 100,
-    },
     user_id: {
       type: ObjectId,
       ref: 'User',
