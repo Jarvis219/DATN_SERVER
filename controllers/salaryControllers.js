@@ -81,7 +81,7 @@ export const searchSalary = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
   let option = req.query.option ? req.query.option : '';
   Salary.find({
-    name: {
+    user_id: {
       $regex: `${option}`,
       $options: '$i',
     },

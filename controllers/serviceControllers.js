@@ -122,7 +122,7 @@ export const filterCategory = (req, res) => {
   const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(category);
   Service.findOne({
-    category: id,
+    category_id: id,
   }).exec((err, data) => {
     if (err) {
       return res.status(400).json({

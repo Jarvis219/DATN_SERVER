@@ -81,7 +81,7 @@ export const searchStaff = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
   let name = req.query.name ? req.query.name : '';
   Staff.find({
-    name: {
+    status: {
       $regex: `${name}`,
       $options: '$i',
     },

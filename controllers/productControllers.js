@@ -83,7 +83,7 @@ export const listProductRelated = (req, res) => {
     _id: {
       $ne: req.product, // loại trừ
     },
-    category: req.product.category, // lấy theo thể loại
+    category_id: req.product.category, // lấy theo thể loại
   })
     .limit(limit)
     .populate('category_id', '_id name')
@@ -101,7 +101,7 @@ export const listSearch = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
   let name = req.query.name ? req.query.name : '';
   Product.find({
-    name: {
+    product_name: {
       $regex: `${name}`,
       $options: '$i',
     },
@@ -122,7 +122,7 @@ export const filterCategory = (req, res) => {
   const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(category);
   Product.findOne({
-    category: id,
+    category_id: id,
   }).exec((err, data) => {
     if (err) {
       return res.status(400).json({

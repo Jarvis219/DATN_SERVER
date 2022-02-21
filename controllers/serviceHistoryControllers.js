@@ -81,7 +81,7 @@ export const searchServiceHistory = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
   let name = req.query.name ? req.query.name : '';
   ServiceHistory.find({
-    name: {
+    service_name: {
       $regex: `${name}`,
       $options: '$i',
     },
