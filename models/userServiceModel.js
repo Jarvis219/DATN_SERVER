@@ -1,20 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
 const UserServiceSchema = new mongoose.Schema(
   {
     user_id: {
       type: ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
     staff_id: {
       type: ObjectId,
-      ref: 'Staff',
+      ref: "Staff",
       required: true,
     },
     service_id: {
       type: ObjectId,
-      ref: 'Service',
+      ref: "Service",
       required: true,
     },
     star: {
@@ -33,13 +33,17 @@ const UserServiceSchema = new mongoose.Schema(
       type: String,
       maxLength: 10,
     },
-    startDate: {
+    startDay: {
       type: Date,
       default: Date.now,
     },
-    endDate: {
+    endDay: {
       type: Date,
       default: Date.now,
+    },
+    // khoảng thời gian mà dịch vụ này thực hiện (value: house)
+    period: {
+      type: String,
     },
     service_name: {
       type: String,
@@ -66,4 +70,4 @@ const UserServiceSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('UserService', UserServiceSchema);
+module.exports = mongoose.model("UserService", UserServiceSchema);

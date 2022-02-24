@@ -1,12 +1,12 @@
-import Staff from '../models/staffModel';
-import _ from 'lodash';
+import Staff from "../models/staffModel";
+import _ from "lodash";
 
 export const listStaff = (req, res) => {
   Staff.find()
     .sort({
       updatedAt: -1,
     })
-    .populate('position_id', 'position_name')
+    .populate("user_id")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +17,7 @@ export const listStaff = (req, res) => {
 
 export const staffId = (req, res, next, id) => {
   Staff.findById(id)
-    .populate('position_id', 'position_name')
+    .populate("user_id")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -36,11 +36,11 @@ export const removeStaff = (req, res) => {
   staff.remove((err) => {
     if (err) {
       return res.status(400).json({
-        error: 'delete staff failure',
+        error: "delete staff failure",
       });
     }
     res.json({
-      message: 'Delete staff successfully',
+      message: "Delete staff successfully",
     });
   });
 };
@@ -55,7 +55,7 @@ export const createStaff = (req, res) => {
     }
     res.json({
       data,
-      message: 'Create staff successfully',
+      message: "Create staff successfully",
     });
   });
 };
@@ -72,25 +72,25 @@ export const updateStaff = (req, res) => {
     }
     res.json({
       data,
-      message: 'Update staff successfully',
+      message: "Update staff successfully",
     });
   });
 };
 
 export const searchStaff = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
-  let name = req.query.name ? req.query.name : '';
+  let name = req.query.name ? req.query.name : "";
   Staff.find({
     status: {
       $regex: `${name}`,
-      $options: '$i',
+      $options: "$i",
     },
   })
     .limit(limit)
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
-          error: 'Staff not found',
+          error: "Staff not found",
         });
       }
       res.json({ data });
