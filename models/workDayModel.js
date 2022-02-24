@@ -7,14 +7,19 @@ const WorkDaySchema = new mongoose.Schema(
       ref: 'Staff',
       required: true,
     },
-    day: {
-      type: Date,
-      default: Date.now,
+    service_id: {
+      type: ObjectId,
+      ref: 'Service',
+      required: true,
+    },
+    days: {
+      type: Array,
       required: true,
     },
     status: {
-      type: String,
+      type: Number,
       required: true,
+      default: 0,
     },
   },
   { timestamps: true }

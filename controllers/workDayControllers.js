@@ -6,7 +6,10 @@ export const listWorkDay = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('staff_id')
+    .populate([
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
+    ])
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +20,10 @@ export const listWorkDay = (req, res) => {
 
 export const workDayId = (req, res, next, id) => {
   WorkDay.findById(id)
-    .populate('staff_id')
+    .populate([
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
+    ])
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });

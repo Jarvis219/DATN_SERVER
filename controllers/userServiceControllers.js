@@ -1,12 +1,12 @@
-import UserService from "../models/userServiceModel";
-import _ from "lodash";
+import UserService from '../models/userServiceModel';
+import _ from 'lodash';
 
 export const listUserService = (req, res) => {
   UserService.find()
     .sort({
       updatedAt: -1,
     })
-    .populate("staff_id service_id user_id")
+    .populate('staff_id')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +17,7 @@ export const listUserService = (req, res) => {
 
 export const userServiceId = (req, res, next, id) => {
   UserService.findById(id)
-    .populate("staff_id service_id user_id")
+    .populate('staff_id')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -36,11 +36,11 @@ export const removeUserService = (req, res) => {
   userService.remove((err) => {
     if (err) {
       return res.status(400).json({
-        error: "delete user service failure",
+        error: 'delete user service failure',
       });
     }
     res.json({
-      message: "Delete user service successfully",
+      message: 'Delete user service successfully',
     });
   });
 };
@@ -55,7 +55,7 @@ export const createUserService = (req, res) => {
     }
     res.json({
       data,
-      message: "Create user service successfully",
+      message: 'Create user service successfully',
     });
   });
 };
@@ -72,7 +72,7 @@ export const updateUserService = (req, res) => {
     }
     res.json({
       data,
-      message: "Update user service successfully",
+      message: 'Update user service successfully',
     });
   });
 };

@@ -1,27 +1,17 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 const UserServiceSchema = new mongoose.Schema(
   {
-    user_id: {
-      type: ObjectId,
-      ref: "User",
-      required: true,
-    },
     staff_id: {
       type: ObjectId,
-      ref: "Staff",
-      required: true,
-    },
-    service_id: {
-      type: ObjectId,
-      ref: "Service",
+      ref: 'Staff',
       required: true,
     },
     star: {
       type: Number,
       required: true,
       maxLength: 5,
-      default: 0,
+      default: 5,
     },
     totalMoney: {
       type: Number,
@@ -41,10 +31,6 @@ const UserServiceSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    // khoảng thời gian mà dịch vụ này thực hiện (value: house)
-    period: {
-      type: String,
-    },
     service_name: {
       type: String,
       required: true,
@@ -53,6 +39,7 @@ const UserServiceSchema = new mongoose.Schema(
     service_price: {
       type: Number,
       required: true,
+      default: 0,
       maxLength: 21,
     },
     service_sale: {
@@ -61,8 +48,19 @@ const UserServiceSchema = new mongoose.Schema(
       default: 0,
       maxLength: 21,
     },
-    service_album: {
-      type: Array,
+    name_guest: {
+      type: String,
+      required: true,
+      maxLength: 100,
+    },
+    phone_number: {
+      type: String,
+      required: true,
+      maxLength: 100,
+    },
+    note: {
+      type: String,
+      maxLength: 1000,
     },
   },
   {
@@ -70,4 +68,4 @@ const UserServiceSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("UserService", UserServiceSchema);
+module.exports = mongoose.model('UserService', UserServiceSchema);
