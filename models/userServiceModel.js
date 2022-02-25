@@ -5,64 +5,54 @@ const UserServiceSchema = new mongoose.Schema(
     user_id: {
       type: ObjectId,
       ref: "User",
-      required: true,
     },
-    staff_id: {
-      type: ObjectId,
-      ref: "Staff",
-      required: true,
-    },
-    service_id: {
-      type: ObjectId,
-      ref: "Service",
-      required: true,
-    },
-    star: {
-      type: Number,
-      required: true,
-      maxLength: 5,
-      default: 0,
-    },
-    totalMoney: {
-      type: Number,
-      required: true,
-      maxLength: 21,
-      default: 0,
-    },
-    status: {
+    phoneNumber: {
       type: String,
-      maxLength: 10,
+      maxlength: 11,
+      required: true,
     },
-    startDay: {
-      type: Date,
-      default: Date.now,
-    },
-    endDay: {
-      type: Date,
-      default: Date.now,
-    },
-    // khoảng thời gian mà dịch vụ này thực hiện (value: house)
-    period: {
+    staff_name: {
       type: String,
+      required: true,
+    },
+    name_guest: {
+      type: String,
+      maxLength: 100,
+      required: true,
     },
     service_name: {
       type: String,
       required: true,
-      maxLength: 100,
+    },
+    status: {
+      type: Number,
+      default: 0,
+      maxLength: 10,
+    },
+    // khoảng thời gian mà dịch vụ này thực hiện (value: date)
+    period: {
+      type: String,
+    },
+    star: {
+      type: Number,
+      default: 5,
     },
     service_price: {
       type: Number,
+      default: 0,
       required: true,
-      maxLength: 21,
     },
     service_sale: {
       type: Number,
-      required: true,
       default: 0,
-      maxLength: 21,
+      required: true,
     },
-    service_album: {
-      type: Array,
+    service_photo: {
+      type: String,
+    },
+    note: {
+      type: String,
+      maxLength: 1000,
     },
   },
   {

@@ -1,16 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
 const WorkDaySchema = new mongoose.Schema(
   {
     staff_id: {
       type: ObjectId,
-      ref: 'Staff',
+      ref: "Staff",
       required: true,
     },
-    day: {
-      type: Date,
-      default: Date.now,
+    service_id: {
+      type: ObjectId,
+      ref: "Service",
       required: true,
+    },
+    days: {
+      type: Array,
     },
     status: {
       type: String,
@@ -20,4 +23,4 @@ const WorkDaySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('WorkDay', WorkDaySchema);
+module.exports = mongoose.model("WorkDay", WorkDaySchema);

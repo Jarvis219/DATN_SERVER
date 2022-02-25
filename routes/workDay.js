@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   listWorkDay,
   workDayId,
@@ -6,16 +6,18 @@ import {
   removeWorkDay,
   updateWorkDay,
   createWorkDay,
-} from '../controllers/workDayControllers';
+  filterStaff,
+} from "../controllers/workDayControllers";
 
 const router = express.Router();
 
-router.get('/list/work/day', listWorkDay);
-router.get('/read/work/day/:id', readWorkDay);
-router.post('/create/work/day', createWorkDay);
-router.put('/update/work/day/:id', updateWorkDay);
-router.delete('/remove/work/day/:id', removeWorkDay);
+router.get("/list/work/day", listWorkDay);
+router.get("/read/work/day/:id", readWorkDay);
+router.post("/find/work/staff", filterStaff);
+router.post("/create/work/day", createWorkDay);
+router.put("/update/work/day/:id", updateWorkDay);
+router.delete("/remove/work/day/:id", removeWorkDay);
 
-router.param('id', workDayId);
+router.param("id", workDayId);
 
 module.exports = router;
