@@ -39,13 +39,15 @@ const authRouters = require('./routes/auth');
 const serviceRouter = require('./routes/service');
 const positionRouter = require('./routes/position');
 const staffRouter = require('./routes/staff');
-const userServiceRouter = require('./routes/userService');
-const serviceHistoryRouter = require('./routes/serviceHistory');
 const categoryRouter = require('./routes/category');
 const productRouter = require('./routes/product');
-const workDayRouter = require('./routes/workDay');
 const salaryRouter = require('./routes/salary');
 const userRouter = require('./routes/user');
+const appointmentRouter = require('./routes/appointment');
+const customerRouter = require('./routes/customer');
+const invoiceRouter = require('./routes/invoice');
+const detailInvoiceRouter = require('./routes/detailInvoice');
+const employeeJobDetail = require('./routes/employeeJobDetail');
 
 //db connection
 mongoose
@@ -73,13 +75,16 @@ app.use('/api', authRouters);
 app.use('/api', serviceRouter);
 app.use('/api', positionRouter);
 app.use('/api', staffRouter);
-app.use('/api', userServiceRouter);
-app.use('/api', serviceHistoryRouter);
 app.use('/api', categoryRouter);
 app.use('/api', productRouter);
-app.use('/api', workDayRouter);
 app.use('/api', salaryRouter);
 app.use('/api', userRouter);
+// api đặt lịch
+app.use('/api', appointmentRouter);
+app.use('/api', customerRouter);
+app.use('/api', invoiceRouter);
+app.use('/api', detailInvoiceRouter);
+app.use('/api', employeeJobDetail);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
