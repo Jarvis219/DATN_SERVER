@@ -40,6 +40,10 @@ const ServiceSchema = new mongoose.Schema(
       ref: 'Category',
       required: true,
     },
+    service_time: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
