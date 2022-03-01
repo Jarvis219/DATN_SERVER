@@ -1,38 +1,55 @@
-// io.on('connection', (socket) => {
-//   // Bỏ kết nối
-//   socket.on('disconnect', () => {});
-//   // nhận kết nối từ client
-//   socket.on('send-message', (data) => {
-//     console.log(data);
-//     // gửi data mới gửi lên với các kết nối khác của client
-//     socket.emit('servers-send-data', data);
-//   });
-// });
+import EmployeeJobDetail from "../models/employeeJobDetailModel";
 
-export const notification = (io, user) => {
-  io.on('connection', (socket) => {
-    socket.on('disconnect', () => {
-      console.log('disconnect');
+function employeeJobDetail() {
+  return new Promise((resolve, reject) => {
+    EmployeeJobDetail.find()
+      .populate([
+        { path: "service_id" },
+        { path: "staff_id", populate: { path: "user_id" } },
+      ])
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+  });
+}
+
+export const notification = (io) => {
+  io.on("connection", (socket) => {
+    socket.on("disconnect", () => {
+      // console.log("disconnect");
     });
-    socket.on('notifications', (data) => {
-      socket.emit('send-notifications', data);
+    employeeJobDetail().then((data) => {
+      socket.emit("send-message", data);
+    });
+
+    socket.on("notifications", (data) => {
+      console.log(data);
+      socket.emit("send-notifications", "listStaff()");
     });
   });
 };
 
 export const message = (io) => {
-  io.on('connection', (socket) => {
-    socket.on('disconnect', () => {});
-    socket.on('send-message', (room, data) => {
-      if (room === '') {
-        socket.broadcast.emit('private-message', data);
+  io.on("connection", (socket) => {
+    socket.on("disconnect", () => {
+      // console.log("disconnect");
+    });
+    socket.on("test", (data) => {
+      socket.emit("test1", "mess");
+    });
+    socket.on("send-message", (room, data) => {
+      if (room === "") {
+        socket.broadcast.emit("private-message", data);
       } else {
         console.log(room, data);
-        socket.in(room).emit('private-message', data);
+        socket.in(room).emit("private-message", data);
       }
     });
 
-    socket.on('join-room', (room) => {
+    socket.on("join-room", (room) => {
       socket.join(room);
     });
   });
