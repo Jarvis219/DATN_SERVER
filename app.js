@@ -37,7 +37,6 @@ instrument(io, {
 // Router
 const authRouters = require("./routes/auth");
 const serviceRouter = require("./routes/service");
-const positionRouter = require("./routes/position");
 const staffRouter = require("./routes/staff");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
@@ -74,7 +73,6 @@ notification(io);
 
 app.use("/api", authRouters);
 app.use("/api", serviceRouter);
-app.use("/api", positionRouter);
 app.use("/api", staffRouter);
 app.use("/api", categoryRouter);
 app.use("/api", productRouter);
