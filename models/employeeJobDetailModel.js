@@ -15,6 +15,9 @@ const EmployeeJobDetailSchema = new mongoose.Schema(
     schedule: {
       type: Array,
     },
+    dayOff: {
+      type: Array,
+    },
   },
   {
     timestamps: true,
