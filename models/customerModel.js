@@ -4,7 +4,7 @@ const CustomerSchema = new mongoose.Schema(
     customer_name: {
       type: String,
       required: true,
-      default: "",
+      default: "null",
       maxLength: 100,
     },
     customer_email: {
