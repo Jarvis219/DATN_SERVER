@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const CustomerSchema = new mongoose.Schema(
   {
     customer_name: {
@@ -30,10 +30,21 @@ const CustomerSchema = new mongoose.Schema(
     customer_gender: {
       type: Number,
     },
+    /**
+     * 0: 'Chưa liên hệ',
+       1: 'Đã liên hệ',
+       2: 'Đã đặt lịch thành công',
+       3: 'Đã đặt lịch thất bại'
+     */
+    status: {
+      required: true,
+      default: 0,
+      type: Number,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model("Customer", CustomerSchema);

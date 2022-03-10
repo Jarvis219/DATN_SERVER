@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
 const AppointmentSchema = new mongoose.Schema(
   {
@@ -8,17 +8,17 @@ const AppointmentSchema = new mongoose.Schema(
     },
     customer_id: {
       type: ObjectId,
-      ref: 'Customer',
+      ref: "Customer",
       required: true,
     },
     staff_id: {
       type: ObjectId,
-      ref: 'Staff',
+      ref: "Staff",
       required: true,
     },
     service_id: {
       type: ObjectId,
-      ref: 'Service',
+      ref: "Service",
       required: true,
     },
     appointment_date: {
@@ -35,10 +35,15 @@ const AppointmentSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    customer_phone: {
+      type: String,
+      required: true,
+      maxLength: 11,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('Appointment', AppointmentSchema);
+module.exports = mongoose.model("Appointment", AppointmentSchema);
