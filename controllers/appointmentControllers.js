@@ -2,14 +2,20 @@ import Appointment from '../models/appointmentModel';
 import _ from 'lodash';
 
 export const listAppointment = (req, res) => {
-  Appointment.find().exec((err, data) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'Appointment not found!',
-      });
-    }
-    res.status(200).json({ data });
-  });
+  Appointment.find()
+    .populate([
+      { path: 'service_id' },
+      { path: 'customer_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
+    ])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(500).json({
+          error: 'Appointment not found!',
+        });
+      }
+      res.status(200).json({ data });
+    });
 };
 
 export const createAppointment = (req, res) => {
@@ -28,15 +34,21 @@ export const createAppointment = (req, res) => {
 };
 
 export const appointmentId = (req, res, next, id) => {
-  Appointment.findById(id).exec((err, data) => {
-    if (err) {
-      return res.status(404).json({
-        error: 'Appointment not found!',
-      });
-    }
-    req.appointment = data;
-    next();
-  });
+  Appointment.findById(id)
+    .populate([
+      { path: 'service_id' },
+      { path: 'customer_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
+    ])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(404).json({
+          error: 'Appointment not found!',
+        });
+      }
+      req.appointment = data;
+      next();
+    });
 };
 
 export const readAppointment = (req, res) => {
