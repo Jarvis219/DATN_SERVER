@@ -1,4 +1,4 @@
-import express from 'express';
+import express from "express";
 import {
   listCustomer,
   customerId,
@@ -6,17 +6,18 @@ import {
   removeCustomer,
   updateCustomer,
   createCustomer,
-  findCustomerPhone,
-} from '../controllers/customerControllers';
+  filterCustomerPhone,
+} from "../controllers/customerControllers";
 
 const router = express.Router();
 
-router.get('/list-customer', listCustomer);
-router.get('/read-customer/:id', readCustomer);
-router.post('/create-customer', createCustomer);
-router.put('/update-customer/:id', updateCustomer);
-router.delete('/remove-customer/:id', removeCustomer);
+router.get("/find-customer", filterCustomerPhone);
+router.get("/list-customer", listCustomer);
+router.get("/read-customer/:id", readCustomer);
+router.post("/create-customer", createCustomer);
+router.put("/update-customer/:id", updateCustomer);
+router.delete("/remove-customer/:id", removeCustomer);
 
-router.param('id', customerId);
+router.param("id", customerId);
 
 module.exports = router;
