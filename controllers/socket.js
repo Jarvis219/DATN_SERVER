@@ -21,21 +21,21 @@ function employeeJobDetail(id) {
 }
 
 export const notification = (io) => {
-  io.on('connection', (socket) => {
-    socket.on('disconnect', () => {});
-    socket.on('notifications', (data) => {
-      employeeJobDetail(data).then((noti) => {
-        socket.emit('send-message', noti);
-      });
-    });
-    socket.on('notifications-staff', (id) => {
-      createNotificationStaff(id).then((data) => {
-        listNotificationStaff(data.staff_id).then((noti) => {
-          socket.broadcast.emit('send-message', noti);
-        });
-      });
-    });
-  });
+  // io.on('connection', (socket) => {
+  //   socket.on('disconnect', () => {});
+  //   socket.on('notifications', (data) => {
+  //     employeeJobDetail(data).then((noti) => {
+  //       socket.emit('send-message', noti);
+  //     });
+  //   });
+  //   socket.on('notifications-staff', (id) => {
+  //     createNotificationStaff(id).then((data) => {
+  //       listNotificationStaff(data.staff_id).then((noti) => {
+  //         socket.broadcast.emit('send-message', noti);
+  //       });
+  //     });
+  //   });
+  // });
 };
 
 // export const message = (io) => {
