@@ -54,7 +54,7 @@ app.use(
   })
 );
 
-// notification(io);
+notification(io);
 
 app.use('/api', authRouters);
 app.use('/api', serviceRouter);
