@@ -1,16 +1,12 @@
-import EmployeeJobDetail from '../models/employeeJobDetailModel';
-import {
-  createNotificationStaff,
-  listNotificationStaff,
-} from './notificationStaffController';
+import NotificationStaff from '../models/NotificationStaffModel';
+import _ from 'lodash';
 
-function employeeJobDetail(id) {
+const listNotificationStaff = (staffId) => {
+  const ObjectId = require('mongodb').ObjectId;
+  const id = new ObjectId(staffId);
   return new Promise((resolve, reject) => {
-    EmployeeJobDetail.find({ _id: id })
-      .populate([
-        { path: 'service_id' },
-        { path: 'staff_id', populate: { path: 'user_id' } },
-      ])
+    NotificationStaff.find({ staff_id: id })
+      .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
       .exec((err, data) => {
         if (err) {
           reject(err);
@@ -18,23 +14,44 @@ function employeeJobDetail(id) {
         resolve(data);
       });
   });
-}
+};
+
+const createNotificationStaff = (data) => {
+  const notificationStaff = new NotificationStaff(data);
+  return new Promise((resolve, reject) => {
+    notificationStaff.save((err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
+
+const removeNotificationStaff = (idNoti) => {
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find({ _id: idNoti })
+      .remove()
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve('remove success');
+      });
+  });
+};
 
 export const notification = (io) => {
   io.on('connection', (socket) => {
     socket.on('disconnect', () => {});
-    socket.on('notifications', (data) => {
-      employeeJobDetail(data).then((noti) => {
-        socket.emit('send-message', noti);
+
+    socket.on('notifications-staff', (id) => {
+      createNotificationStaff(id).then((data) => {
+        listNotificationStaff(data.staff_id).then((noti) => {
+          socket.broadcast.emit('send-message', noti);
+        });
       });
     });
-    // socket.on('notifications-staff', (id) => {
-    //   createNotificationStaff(id).then((data) => {
-    //     listNotificationStaff(data.staff_id).then((noti) => {
-    //       socket.broadcast.emit('send-message', noti);
-    //     });
-    //   });
-    // });
   });
 };
 
