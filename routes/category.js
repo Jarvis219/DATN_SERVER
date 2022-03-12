@@ -15,7 +15,7 @@ const router = express.Router();
 router.get('/list-category', listCategories);
 
 //Chi tiết danh mục
-router.get('/read-category/:id', categoryId, readCategory);
+router.get('/read-category/:id', readCategory);
 
 //Thêm mới danh mục
 router.post('/create-category', createCategory);

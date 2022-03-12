@@ -11,7 +11,7 @@ import {
 const router = express.Router();
 
 router.get('/list-invoice', listInvoice);
-router.get('/read-invoice/:id', invoiceId, readInvoice);
+router.get('/read-invoice/:id', readInvoice);
 router.post('/create-invoice', createInvoice);
 router.put('/update-invoice/:id', updateInvoice);
 router.delete('/remove-invoice/:id', removeInvoice);
