@@ -1,5 +1,8 @@
 import EmployeeJobDetail from '../models/employeeJobDetailModel';
-import _ from 'lodash';
+import {
+  createNotificationStaff,
+  listNotificationStaff,
+} from './notificationStaffController';
 
 function employeeJobDetail(id) {
   return new Promise((resolve, reject) => {
@@ -17,49 +20,22 @@ function employeeJobDetail(id) {
   });
 }
 
-const listNotificationStaff = (staffId) => {
-  const ObjectId = require('mongodb').ObjectId;
-  const id = new ObjectId(staffId);
-  return new Promise((resolve, reject) => {
-    NotificationStaff.find({ staff_id: id })
-      .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
-      .exec((err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
+export const notification = (io) => {
+  io.on('connection', (socket) => {
+    socket.on('disconnect', () => {});
+    socket.on('notifications', (data) => {
+      employeeJobDetail(data).then((noti) => {
+        socket.emit('send-message', noti);
       });
-  });
-};
-
-const createNotificationStaff = (data) => {
-  const notificationStaff = new NotificationStaff(data);
-  return new Promise((resolve, reject) => {
-    notificationStaff.save((err, data) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(data);
+    });
+    socket.on('notifications-staff', (id) => {
+      createNotificationStaff(id).then((data) => {
+        listNotificationStaff(data.staff_id).then((noti) => {
+          socket.broadcast.emit('send-message', noti);
+        });
+      });
     });
   });
-};
-
-export const notification = (io) => {
-  // io.on('connection', (socket) => {
-  //   socket.on('disconnect', () => {});
-  //   socket.on('notifications', (data) => {
-  //     employeeJobDetail(data).then((noti) => {
-  //       socket.emit('send-message', noti);
-  //     });
-  //   });
-  //   socket.on('notifications-staff', (id) => {
-  //     createNotificationStaff(id).then((data) => {
-  //       listNotificationStaff(data.staff_id).then((noti) => {
-  //         socket.broadcast.emit('send-message', noti);
-  //       });
-  //     });
-  //   });
-  // });
 };
 
 // export const message = (io) => {
