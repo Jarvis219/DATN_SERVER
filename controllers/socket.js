@@ -1,32 +1,32 @@
 import NotificationStaff from '../models/NotificationStaffModel';
 import _ from 'lodash';
 
-const listNotificationStaff = (staffId) => {
-  const ObjectId = require('mongodb').ObjectId;
-  const id = new ObjectId(staffId);
-  return new Promise((resolve, reject) => {
-    NotificationStaff.find({ staff_id: id })
-      .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
-      .exec((err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(data);
-      });
-  });
-};
+// const listNotificationStaff = (staffId) => {
+//   const ObjectId = require('mongodb').ObjectId;
+//   const id = new ObjectId(staffId);
+//   return new Promise((resolve, reject) => {
+//     NotificationStaff.find({ staff_id: id })
+//       .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
+//       .exec((err, data) => {
+//         if (err) {
+//           reject(err);
+//         }
+//         resolve(data);
+//       });
+//   });
+// };
 
-const createNotificationStaff = (data) => {
-  const notificationStaff = new NotificationStaff(data);
-  return new Promise((resolve, reject) => {
-    notificationStaff.save((err, data) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(data);
-    });
-  });
-};
+// const createNotificationStaff = (data) => {
+//   const notificationStaff = new NotificationStaff(data);
+//   return new Promise((resolve, reject) => {
+//     notificationStaff.save((err, data) => {
+//       if (err) {
+//         reject(err);
+//       }
+//       resolve(data);
+//     });
+//   });
+// };
 
 // const removeNotificationStaff = (idNoti) => {
 //   return new Promise((resolve, reject) => {
