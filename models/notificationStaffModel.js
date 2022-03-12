@@ -15,6 +15,7 @@ const NotificationStaff = new mongoose.Schema(
     content: {
       type: String,
       required: true,
+      default: 'notification',
     },
     status: {
       type: Number,
