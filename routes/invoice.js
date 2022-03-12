@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import {
   listInvoice,
   invoiceId,
@@ -6,16 +6,16 @@ import {
   removeInvoice,
   updateInvoice,
   createInvoice,
-} from "../controllers/invoiceControllers";
+} from '../controllers/invoiceControllers';
 
 const router = express.Router();
 
-router.get("/list-invoice", listInvoice);
-router.get("/read-invoice/:id", readInvoice);
-router.post("/create-invoice", createInvoice);
-router.put("/update-invoice/:id", updateInvoice);
-router.delete("/remove-invoice/:id", removeInvoice);
+router.get('/list-invoice', listInvoice);
+router.get('/read-invoice/:id', invoiceId, readInvoice);
+router.post('/create-invoice', createInvoice);
+router.put('/update-invoice/:id', updateInvoice);
+router.delete('/remove-invoice/:id', removeInvoice);
 
-router.param("id", invoiceId);
+router.param('id', invoiceId);
 
 module.exports = router;

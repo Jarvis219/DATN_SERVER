@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/search-staff', searchStaff);
 router.get('/list-staff', listStaff);
-router.get('/read-staff/:id', readStaff);
+router.get('/read-staff/:id', staffId, readStaff);
 router.post('/create-staff', createStaff);
 router.put('/update-staff/:id', updateStaff);
 router.delete('/remove-staff/:id', removeStaff);
