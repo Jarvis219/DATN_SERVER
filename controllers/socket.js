@@ -1,8 +1,5 @@
 import EmployeeJobDetail from '../models/employeeJobDetailModel';
-import {
-  createNotificationStaff,
-  listNotificationStaff,
-} from '../controllers/notificationStaffController';
+import _ from 'lodash';
 
 function employeeJobDetail(id) {
   return new Promise((resolve, reject) => {
@@ -19,6 +16,33 @@ function employeeJobDetail(id) {
       });
   });
 }
+
+const listNotificationStaff = (staffId) => {
+  const ObjectId = require('mongodb').ObjectId;
+  const id = new ObjectId(staffId);
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find({ staff_id: id })
+      .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+  });
+};
+
+const createNotificationStaff = (data) => {
+  const notificationStaff = new NotificationStaff(data);
+  return new Promise((resolve, reject) => {
+    notificationStaff.save((err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
 
 export const notification = (io) => {
   // io.on('connection', (socket) => {
