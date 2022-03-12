@@ -1,45 +1,45 @@
-// import NotificationStaff from '../models/NotificationStaffModel';
-// import _ from 'lodash';
+import NotificationStaff from '../models/NotificationStaffModel';
+import _ from 'lodash';
 
-// export const listNotificationStaff = (staffId) => {
-//   const ObjectId = require('mongodb').ObjectId;
-//   const id = new ObjectId(staffId);
-//   return new Promise((resolve, reject) => {
-//     NotificationStaff.find({ staff_id: id })
-//       .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
-//       .exec((err, data) => {
-//         if (err) {
-//           reject(err);
-//         }
-//         resolve(data);
-//       });
-//   });
-// };
+export const listNotificationStaff = (staffId) => {
+  const ObjectId = require('mongodb').ObjectId;
+  const id = new ObjectId(staffId);
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find({ staff_id: id })
+      .populate([{ path: 'staff_id' }, { path: 'appointments_id' }])
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+  });
+};
 
-// export const createNotificationStaff = (data) => {
-//   const notificationStaff = new NotificationStaff(data);
-//   return new Promise((resolve, reject) => {
-//     notificationStaff.save((err, data) => {
-//       if (err) {
-//         reject(err);
-//       }
-//       resolve(data);
-//     });
-//   });
-// };
+export const createNotificationStaff = (data) => {
+  const notificationStaff = new NotificationStaff(data);
+  return new Promise((resolve, reject) => {
+    notificationStaff.save((err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
 
-// export const removeNotificationStaff = (idNoti) => {
-//   return new Promise((resolve, reject) => {
-//     NotificationStaff.find({ _id: idNoti })
-//       .remove()
-//       .exec((err, data) => {
-//         if (err) {
-//           reject(err);
-//         }
-//         resolve('remove success');
-//       });
-//   });
-// };
+export const removeNotificationStaff = (idNoti) => {
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find({ _id: idNoti })
+      .remove()
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve('remove success');
+      });
+  });
+};
 
 // export const updateNotificationStaff = (req, res) => {
 //   let notificationStaff = req.notificationStaff;
