@@ -28,30 +28,29 @@ const createNotificationStaff = (data) => {
   });
 };
 
-const removeNotificationStaff = (idNoti) => {
-  return new Promise((resolve, reject) => {
-    NotificationStaff.find({ _id: idNoti })
-      .remove()
-      .exec((err, data) => {
-        if (err) {
-          reject(err);
-        }
-        resolve('remove success');
-      });
-  });
-};
+// const removeNotificationStaff = (idNoti) => {
+//   return new Promise((resolve, reject) => {
+//     NotificationStaff.find({ _id: idNoti })
+//       .remove()
+//       .exec((err) => {
+//         if (err) {
+//           reject(err);
+//         }
+//         resolve('remove success');
+//       });
+//   });
+// };
 
 export const notification = (io) => {
   io.on('connection', (socket) => {
     socket.on('disconnect', () => {});
-
-    socket.on('notifications-staff', (id) => {
-      createNotificationStaff(id).then((data) => {
-        listNotificationStaff(data.staff_id).then((noti) => {
-          socket.broadcast.emit('send-message', noti);
-        });
-      });
-    });
+    // socket.on('notifications-staff', (id) => {
+    //   createNotificationStaff(id).then((data) => {
+    //     listNotificationStaff(data.staff_id).then((noti) => {
+    //       socket.broadcast.emit('send-message', noti);
+    //     });
+    //   });
+    // });
   });
 };
 
