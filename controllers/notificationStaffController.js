@@ -32,7 +32,7 @@ export const removeNotificationStaff = (idNoti) => {
   return new Promise((resolve, reject) => {
     NotificationStaff.find({ _id: idNoti })
       .remove()
-      .exec((err, data) => {
+      .exec((err) => {
         if (err) {
           reject(err);
         }
