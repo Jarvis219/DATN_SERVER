@@ -109,3 +109,20 @@ export const searchStaff = (req, res) => {
       res.json({ data });
     });
 };
+
+export const findStaff = (req, res) => {
+  let userId = req.query.userId ? req.query.userId : '';
+  const ObjectId = require('mongodb').ObjectId;
+  const id = new ObjectId(userId);
+  Service.findOne({
+    user_id: id,
+  }).exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        error: 'data does not exist',
+      });
+    }
+    res.json({ data });
+  });
+};
