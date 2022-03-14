@@ -44,8 +44,10 @@ export const listCart = (req, res) => {
 export const listCartUser = (req, res) => {
     let user = req.query.user ? req.query.user : "";
     Cart.find({
-        user: user,
-    }).exec((err, data) => {
+        user_id: user,
+    })
+    .populate("user_id", "name email")
+    .exec((err, data) => {
         if(err) {
             return res.status(400).json({
                 err
