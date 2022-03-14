@@ -11,13 +11,13 @@ dotenv.config();
 // server with socket
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  },
+    cors: {
+        origin: '*',
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    },
 });
 instrument(io, {
-  auth: false,
+    auth: false,
 });
 
 // Router
@@ -30,28 +30,29 @@ const salaryRouter = require('./routes/salary');
 const userRouter = require('./routes/user');
 const appointmentRouter = require('./routes/appointment');
 const customerRouter = require('./routes/customer');
+const cartRouter = require('./routes/cart');
 const invoiceRouter = require('./routes/invoice');
 const detailInvoiceRouter = require('./routes/detailInvoice');
 const employeeJobDetail = require('./routes/employeeJobDetail');
 
 //db connection
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('DB Connected'));
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log('DB Connected'));
 
 mongoose.connection.on('error', (err) => {
-  console.log(`DB connection error: ${err.message}`);
+    console.log(`DB connection error: ${err.message}`);
 });
 
 // Middleware
 app.use(express.json());
 app.use(
-  cors({
-    credentials: 'same-origin',
-  })
+    cors({
+        credentials: 'same-origin',
+    })
 );
 
 notification(io);
@@ -63,6 +64,7 @@ app.use('/api', categoryRouter);
 app.use('/api', productRouter);
 app.use('/api', salaryRouter);
 app.use('/api', userRouter);
+app.use('/api', cartRouter);
 // api đặt lịch
 app.use('/api', appointmentRouter);
 app.use('/api', customerRouter);
@@ -72,5 +74,5 @@ app.use('/api', employeeJobDetail);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
-  console.log(`Server is running on port : ${port}`);
+    console.log(`Server is running on port : ${port}`);
 });
