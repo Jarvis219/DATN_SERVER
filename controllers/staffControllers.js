@@ -114,7 +114,7 @@ export const findStaff = (req, res) => {
   let userId = req.query.userId ? req.query.userId : '';
   const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(userId);
-  Service.findOne({
+  Staff.findOne({
     user_id: id,
   }).exec((err, data) => {
     if (err) {
