@@ -22,6 +22,25 @@ export const listNotificationStaff = (staffId) => {
   });
 };
 
+export const listNotifications = () => {
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find()
+      .populate([
+        { path: 'staff_id', populate: { path: 'user_id' } },
+        { path: 'appointments_id', populate: { path: 'service_id' } },
+      ])
+      .sort({
+        updatedAt: -1,
+      })
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+  });
+};
+
 export const createNotificationStaff = (data) => {
   const notificationStaff = new NotificationStaff(data);
   return new Promise((resolve, reject) => {
