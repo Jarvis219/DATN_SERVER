@@ -8,12 +8,21 @@ export const notification = (io) => {
   io.on('connection', (socket) => {
     socket.on('disconnect', () => {});
     socket.on('notifications-staff', (room, id) => {
-      if (room === 'notifications-staff') {
-        createNotificationStaff(id).then((data) => {
+      switch (room) {
+        case 'create-notifications-staff':
+          createNotificationStaff(id).then((data) => {
           listNotificationStaff(data.staff_id).then((noti) => {
-            socket.broadcast.emit('send-notification', noti);
+            socket.broadcast.emit(`send-notification-staff-${data.staff_id}`, noti);
           });
         });
+          break;
+          case 'list-notifications-staff':
+          listNotificationStaff(id.id).then((noti) => {
+            socket.emit(`send-notification-staff-${id.id}`, noti);
+          });
+          break;
+        default:
+          break;
       }
     });
 

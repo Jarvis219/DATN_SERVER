@@ -23,7 +23,7 @@ const NotificationStaff = new mongoose.Schema(
       default: 0,
     },
     period: {
-      type: Array,
+      type: String,
     },
   },
   { timestamps: true }
