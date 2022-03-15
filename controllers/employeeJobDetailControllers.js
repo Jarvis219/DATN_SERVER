@@ -85,9 +85,9 @@ export const updateEmployeeJobDetail = (req, res) => {
 };
 
 export const findStaff = (req, res) => {
-  let staff = req.query.staff ? req.query.staff : "";
+  let staffId = req.query.staffId ? req.query.staffId : "";
   const ObjectId = require("mongodb").ObjectId;
-  const id = new ObjectId(staff);
+  const id = new ObjectId(staffId);
   EmployeeJobDetail.findOne({
     staff_id: id,
   }).exec((err, data) => {

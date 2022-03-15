@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-router.get("/find-staff", findStaff);
+router.get("/find-staff-to-id", findStaff);
 router.get("/list/employee/job/detail", listEmployeeJobDetail);
 router.get("/read/employee/job/detail/:id", readEmployeeJobDetail);
 router.post("/create/employee/job/detail", createEmployeeJobDetail);
