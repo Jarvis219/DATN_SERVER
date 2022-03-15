@@ -6,6 +6,7 @@ const StaffSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "User",
       required: true,
+      unique: true,
     },
     star: {
       type: Number,

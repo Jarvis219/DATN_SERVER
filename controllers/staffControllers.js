@@ -72,6 +72,7 @@ export const createStaff = (req, res, next) => {
       staff_id: data._id,
       service_id: req.body.service_id,
     };
+    req.newStaff = data;
     next();
   });
 };
@@ -86,8 +87,9 @@ export const createEmployeeJobDetail = (req, res) => {
       });
     }
     res.json({
-      data,
+      data: req.newStaff,
       message: "Create employee job detail successfully",
+      work: data,
     });
   });
 };
