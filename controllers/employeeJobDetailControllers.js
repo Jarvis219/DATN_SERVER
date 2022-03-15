@@ -84,6 +84,23 @@ export const updateEmployeeJobDetail = (req, res) => {
   });
 };
 
+export const findStaff = (req, res) => {
+  let staff = req.query.staff ? req.query.staff : "";
+  const ObjectId = require("mongodb").ObjectId;
+  const id = new ObjectId(staff);
+  EmployeeJobDetail.findOne({
+    staff_id: id,
+  }).exec((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        err,
+        error: "Data does not exist",
+      });
+    }
+    res.json({ data });
+  });
+};
+
 export const findStaffToId = (req, res, next) => {
   let staff = req.query.staff ? req.query.staff : "";
   const ObjectId = require("mongodb").ObjectId;
