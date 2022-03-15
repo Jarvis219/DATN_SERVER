@@ -6,9 +6,32 @@ export const listNotificationStaff = (staffId) => {
   const id = new ObjectId(staffId);
   return new Promise((resolve, reject) => {
     NotificationStaff.find({ staff_id: id })
-      .populate([{ path: 'staff_id' }, { path: 'appointments_id' }]).sort({
-      updatedAt: -1
-    })
+      .populate([
+        { path: 'staff_id' },
+        { path: 'appointments_id', populate: { path: 'service_id' } },
+      ])
+      .sort({
+        updatedAt: -1,
+      })
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+  });
+};
+
+export const listNotifications = () => {
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find()
+      .populate([
+        { path: 'staff_id', populate: { path: 'user_id' } },
+        { path: 'appointments_id', populate: { path: 'service_id' } },
+      ])
+      .sort({
+        updatedAt: -1,
+      })
       .exec((err, data) => {
         if (err) {
           reject(err);

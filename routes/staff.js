@@ -7,10 +7,12 @@ import {
   updateStaff,
   createStaff,
   searchStaff,
+  findStaff,
 } from '../controllers/staffControllers';
 
 const router = express.Router();
 
+router.get('/find-staff', findStaff);
 router.get('/search-staff', searchStaff);
 router.get('/list-staff', listStaff);
 router.get('/read-staff', readStaff);
