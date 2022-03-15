@@ -1,16 +1,18 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
 const EmployeeJobDetailSchema = new mongoose.Schema(
   {
     service_id: {
       type: ObjectId,
       required: true,
-      ref: 'Service',
+      ref: "Service",
+      unique: true,
     },
     staff_id: {
       type: ObjectId,
       required: true,
-      ref: 'Staff',
+      ref: "Staff",
+      unique: true,
     },
     schedule: {
       type: Array,
@@ -24,4 +26,4 @@ const EmployeeJobDetailSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('EmployeeJobDetail', EmployeeJobDetailSchema);
+module.exports = mongoose.model("EmployeeJobDetail", EmployeeJobDetailSchema);
