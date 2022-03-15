@@ -90,15 +90,20 @@ export const findStaff = (req, res) => {
   const id = new ObjectId(staffId);
   EmployeeJobDetail.findOne({
     staff_id: id,
-  }).exec((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        err,
-        error: "Data does not exist",
-      });
-    }
-    res.json({ data });
-  });
+  })
+    .populate([
+      { path: "service_id" },
+      { path: "staff_id", populate: { path: "user_id" } },
+    ])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          err,
+          error: "Data does not exist",
+        });
+      }
+      res.json({ data });
+    });
 };
 
 export const findStaffToId = (req, res, next) => {
