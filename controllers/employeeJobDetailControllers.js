@@ -17,21 +17,6 @@ export const listEmployeeJobDetail = (req, res) => {
     });
 };
 
-export const createEmployeeJobDetail = (req, res) => {
-  const employeeJobDetail = new EmployeeJobDetail(req.body);
-  employeeJobDetail.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Add employee job detail failed!",
-      });
-    }
-    res.json({
-      data,
-      message: "Create employee job detail successfully",
-    });
-  });
-};
-
 export const employeeJobDetailId = (req, res, next, id) => {
   EmployeeJobDetail.findById(id)
     .populate([

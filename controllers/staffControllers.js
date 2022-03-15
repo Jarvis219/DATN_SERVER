@@ -1,4 +1,6 @@
 import Staff from "../models/staffModel";
+import EmployeeJobDetail from "../models/employeeJobDetailModel";
+
 import _ from "lodash";
 
 export const listStaff = (req, res) => {
@@ -58,7 +60,7 @@ export const removeStaff = (req, res) => {
   });
 };
 
-export const createStaff = (req, res) => {
+export const createStaff = (req, res, next) => {
   const staff = new Staff(req.body);
   staff.save((err, data) => {
     if (err) {
@@ -66,9 +68,26 @@ export const createStaff = (req, res) => {
         error: err,
       });
     }
+    req.staffWork = {
+      staff_id: data._id,
+      service_id: req.body.service_id,
+    };
+    next();
+  });
+};
+
+export const createEmployeeJobDetail = (req, res) => {
+  const employeeJobDetail = new EmployeeJobDetail(req.staffWork);
+  employeeJobDetail.save((err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({
+        error: "Add employee job detail failed!",
+      });
+    }
     res.json({
       data,
-      message: "Create staff successfully",
+      message: "Create employee job detail successfully",
     });
   });
 };
