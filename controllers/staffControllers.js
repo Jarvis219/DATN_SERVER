@@ -94,7 +94,7 @@ export const createEmployeeJobDetail = (req, res) => {
   });
 };
 
-export const updateStaff = (req, res) => {
+export const updateStaff = (req, res, next) => {
   let staff = req.staff;
   staff = _.assignIn(staff, req.body);
 
@@ -104,9 +104,54 @@ export const updateStaff = (req, res) => {
         error: err,
       });
     }
+    req.updateStaff = {
+      staff_id: data._id,
+      service_id: req.body.service_id,
+    };
+    req.updateNew = data;
+    next();
+  });
+};
+
+export const findStaffInJob = (req, res, next) => {
+  const ObjectId = require("mongodb").ObjectId;
+  const id = new ObjectId(req.updateStaff.staff_id);
+  EmployeeJobDetail.findOne({
+    staff_id: id,
+  })
+    .populate([
+      { path: "service_id" },
+      { path: "staff_id", populate: { path: "user_id" } },
+    ])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          err,
+          error: "Data does not exist",
+        });
+      }
+      req.dataJob = {
+        id: data._id,
+        ...req.updateStaff,
+      };
+      req.employeeJobDetail = data;
+      next();
+    });
+};
+
+export const updateEmployeeJobDetail = (req, res) => {
+  let employeeJobDetail = req.employeeJobDetail;
+  employeeJobDetail = _.assignIn(employeeJobDetail, req.dataJob);
+  employeeJobDetail.save((err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: "Update employee job detail failed!",
+      });
+    }
     res.json({
-      data,
-      message: "Update staff successfully",
+      data: req.updateNew,
+      message: "Update staff and employee job detail successfully",
+      employeeJobDetail: data,
     });
   });
 };
