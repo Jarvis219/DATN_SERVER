@@ -44,11 +44,13 @@ export const listCart = (req, res) => {
 export const listCartUser = (req, res) => {
     let user = req.query.user ? req.query.user : "";
     Cart.find({
-        user: user,
-    }).exec((err, data) => {
-        if(err) {
+        user_id: user,
+    })
+    .populate("user_id", "name email")
+    .exec((err, data) => {
+        if(data.length == 0) {
             return res.status(400).json({
-                err
+                error: "Cart does not exist"
             });
         }
         res.json({ data });
@@ -59,7 +61,7 @@ export const cartByID = (req, res, next, id) => {
     Cart.findById(id).exec((err, cart) => {
         if (err || !cart) {
             return res.status(400).json({
-                error: "Cart does not exit",
+                error: "Cart does not exist",
             });
         }
         req.cart = cart;
