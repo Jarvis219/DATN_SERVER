@@ -31,7 +31,8 @@ const UserSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
       trim: true,
-      maxLength: 12,
+      maxLength: 15,
+      default: "Chưa cập nhật",
     },
     role: {
       type: Number,
