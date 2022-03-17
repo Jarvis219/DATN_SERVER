@@ -1,14 +1,35 @@
-import NotificationStaff from '../models/notificationStaffModel';
-import _ from 'lodash';
+import NotificationStaff from "../models/notificationStaffModel";
+import _ from "lodash";
 
 export const listNotificationStaff = (staffId) => {
-  const ObjectId = require('mongodb').ObjectId;
+  const ObjectId = require("mongodb").ObjectId;
   const id = new ObjectId(staffId);
   return new Promise((resolve, reject) => {
     NotificationStaff.find({ staff_id: id })
       .populate([
-        { path: 'staff_id' },
-        { path: 'appointments_id', populate: { path: 'service_id' } },
+        { path: "staff_id" },
+        { path: "order_id" },
+        { path: "appointments_id", populate: { path: "service_id" } },
+      ])
+      .sort({
+        updatedAt: -1,
+      })
+      .exec((err, data) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(data);
+      });
+  });
+};
+
+export const listNotifications = () => {
+  return new Promise((resolve, reject) => {
+    NotificationStaff.find()
+      .populate([
+        { path: "staff_id", populate: { path: "user_id" } },
+        { path: "order_id" },
+        { path: "appointments_id", populate: { path: "service_id" } },
       ])
       .sort({
         updatedAt: -1,
@@ -42,7 +63,7 @@ export const removeNotificationStaff = (idNoti) => {
         if (err) {
           reject(err);
         }
-        resolve('remove success');
+        resolve("remove success");
       });
   });
 };

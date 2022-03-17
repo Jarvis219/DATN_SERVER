@@ -17,21 +17,6 @@ export const listEmployeeJobDetail = (req, res) => {
     });
 };
 
-export const createEmployeeJobDetail = (req, res) => {
-  const employeeJobDetail = new EmployeeJobDetail(req.body);
-  employeeJobDetail.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Add employee job detail failed!",
-      });
-    }
-    res.json({
-      data,
-      message: "Create employee job detail successfully",
-    });
-  });
-};
-
 export const employeeJobDetailId = (req, res, next, id) => {
   EmployeeJobDetail.findById(id)
     .populate([
@@ -82,6 +67,28 @@ export const updateEmployeeJobDetail = (req, res) => {
       data,
     });
   });
+};
+
+export const findStaff = (req, res) => {
+  let staffId = req.query.staffId ? req.query.staffId : "";
+  const ObjectId = require("mongodb").ObjectId;
+  const id = new ObjectId(staffId);
+  EmployeeJobDetail.findOne({
+    staff_id: id,
+  })
+    .populate([
+      { path: "service_id" },
+      { path: "staff_id", populate: { path: "user_id" } },
+    ])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          err,
+          error: "Data does not exist",
+        });
+      }
+      res.json({ data });
+    });
 };
 
 export const findStaffToId = (req, res, next) => {

@@ -6,6 +6,7 @@ const StaffSchema = new mongoose.Schema(
       type: ObjectId,
       ref: "User",
       required: true,
+      unique: true,
     },
     star: {
       type: Number,
@@ -20,7 +21,7 @@ const StaffSchema = new mongoose.Schema(
      */
     status: {
       type: Number,
-      maxLength: 50,
+      default: 0,
     },
     rank: {
       type: String,

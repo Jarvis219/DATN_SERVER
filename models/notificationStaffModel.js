@@ -1,21 +1,24 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
 const NotificationStaff = new mongoose.Schema(
   {
     staff_id: {
       type: ObjectId,
       required: true,
-      ref: 'Staff',
+      ref: "Staff",
     },
     appointments_id: {
       type: ObjectId,
-      required: true,
-      ref: 'Appointment',
+      ref: "Appointment",
+    },
+    order_id: {
+      type: ObjectId,
+      ref: "Order",
     },
     content: {
       type: String,
       required: true,
-      default: 'notification',
+      default: "notification",
     },
     status: {
       type: Number,
@@ -29,4 +32,4 @@ const NotificationStaff = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('NotificationStaff', NotificationStaff);
+module.exports = mongoose.model("NotificationStaff", NotificationStaff);
