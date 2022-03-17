@@ -48,9 +48,9 @@ export const listCartUser = (req, res) => {
     })
     .populate("user_id", "name email")
     .exec((err, data) => {
-        if(err) {
+        if(data.length == 0) {
             return res.status(400).json({
-                err
+                error: "Cart does not exist"
             });
         }
         res.json({ data });
@@ -61,7 +61,7 @@ export const cartByID = (req, res, next, id) => {
     Cart.findById(id).exec((err, cart) => {
         if (err || !cart) {
             return res.status(400).json({
-                error: "Cart does not exit",
+                error: "Cart does not exist",
             });
         }
         req.cart = cart;

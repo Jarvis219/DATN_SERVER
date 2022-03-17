@@ -5,9 +5,10 @@ const CartSchema = new mongoose.Schema({
         type: ObjectId,
         ref: "User",
         required: true,
+        unique: true,
     },
     cart_products: {
-        required: true,
+        default: [],
         type: Array,
     },
 }, { timestamps: true });
