@@ -1,11 +1,11 @@
-import Invoice from '../models/invoiceModel';
-import _ from 'lodash';
+import Invoice from "../models/invoiceModel";
+import _ from "lodash";
 
 export const listInvoice = (req, res) => {
   Invoice.find().exec((err, data) => {
     if (err) {
       return res.status(500).json({
-        error: 'Invoice not found!',
+        error: "Invoice not found!",
       });
     }
     res.status(200).json({ data });
@@ -17,12 +17,12 @@ export const createInvoice = (req, res) => {
   invoice.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Add invoice failed!',
+        error: "Add invoice failed!",
       });
     }
     res.json({
       data,
-      message: 'Create invoice successfully',
+      message: "Create invoice successfully",
     });
   });
 };
@@ -31,7 +31,7 @@ export const invoiceId = (req, res, next, id) => {
   Invoice.findById(id).exec((err, data) => {
     if (err) {
       return res.status(404).json({
-        error: 'Invoice not found!',
+        error: "Invoice not found!",
       });
     }
     req.invoice = data;
@@ -48,11 +48,11 @@ export const removeInvoice = (req, res) => {
   invoice.remove((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Delete invoice failed!',
+        error: "Delete invoice failed!",
       });
     }
     res.json({
-      message: 'Delete invoice successfully',
+      message: "Delete invoice successfully",
       data,
     });
   });
@@ -64,11 +64,11 @@ export const updateInvoice = (req, res) => {
   invoice.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Update invoice failed!',
+        error: "Update invoice failed!",
       });
     }
     res.json({
-      message: 'Update invoice successfully',
+      message: "Update invoice successfully",
       data,
     });
   });
@@ -80,7 +80,7 @@ export const listInvoiceRelated = (req, res) => {
   }).exec((err, data) => {
     if (err) {
       res.status(400).json({
-        error: 'Invoice not found!',
+        error: "Invoice not found!",
       });
     }
     res.json({ data });

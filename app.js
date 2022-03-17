@@ -35,6 +35,7 @@ const invoiceRouter = require("./routes/invoice");
 const detailInvoiceRouter = require("./routes/detailInvoice");
 const employeeJobDetail = require("./routes/employeeJobDetail");
 const contactRouter = require("./routes/contact");
+const workdayHistoryRouter = require("./routes/workdayHistory");
 
 //db connection
 mongoose
@@ -67,6 +68,7 @@ app.use("/api", salaryRouter);
 app.use("/api", userRouter);
 app.use("/api", cartRouter);
 app.use("/api", contactRouter);
+app.use("/api", workdayHistoryRouter);
 // api đặt lịch
 app.use("/api", appointmentRouter);
 app.use("/api", customerRouter);
