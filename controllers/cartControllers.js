@@ -48,9 +48,9 @@ export const listCartUser = (req, res) => {
     })
     .populate("user_id", "name email")
     .exec((err, data) => {
-        if(err) {
+        if(err || data.length < 1) {
             return res.status(400).json({
-                error: err
+                error: "Cart doesn't exist"
             });
         }
         res.json({ data });
