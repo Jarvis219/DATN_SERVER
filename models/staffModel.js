@@ -1,11 +1,10 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 const StaffSchema = new mongoose.Schema(
   {
     user_id: {
       type: ObjectId,
-      ref: "User",
-      required: true,
+      ref: 'User',
       unique: true,
     },
     star: {
@@ -33,4 +32,4 @@ const StaffSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Staff", StaffSchema);
+module.exports = mongoose.model('Staff', StaffSchema);

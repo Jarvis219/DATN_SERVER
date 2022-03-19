@@ -1,17 +1,17 @@
-import mongoose from "mongoose";
-import moment from "moment";
+import mongoose from 'mongoose';
+import moment from 'moment';
 const { ObjectId } = mongoose.Schema;
 const WorkdayHistory = new mongoose.Schema(
   {
     day: {
       type: String,
       required: true,
-      default: moment(new Date()).format(),
+      default: moment().format('YYYY-MM-DD') + ' 08:00:00',
     },
     staff_id: {
       type: ObjectId,
       required: true,
-      ref: "Staff",
+      ref: 'Staff',
     },
     workday_status: {
       type: Number,
@@ -26,4 +26,4 @@ const WorkdayHistory = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("WorkdayHistory", WorkdayHistory);
+module.exports = mongoose.model('WorkdayHistory', WorkdayHistory);
