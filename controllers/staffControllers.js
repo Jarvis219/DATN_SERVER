@@ -1,14 +1,14 @@
-import Staff from "../models/staffModel";
-import EmployeeJobDetail from "../models/employeeJobDetailModel";
+import Staff from '../models/staffModel';
+import EmployeeJobDetail from '../models/employeeJobDetailModel';
 
-import _ from "lodash";
+import _ from 'lodash';
 
 export const listStaff = (req, res) => {
   Staff.find()
     .sort({
       updatedAt: -1,
     })
-    .populate("user_id")
+    .populate('user_id')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -19,7 +19,7 @@ export const listStaff = (req, res) => {
 
 export const staffId = (req, res, next, id) => {
   Staff.findById(id)
-    .populate("user_id")
+    .populate('user_id')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -30,8 +30,8 @@ export const staffId = (req, res, next, id) => {
 };
 
 export const readStaff = (req, res) => {
-  let user_id = req.query.user_id ? req.query.user_id : "";
-  const ObjectId = require("mongodb").ObjectId;
+  let user_id = req.query.user_id ? req.query.user_id : '';
+  const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(user_id);
   Staff.findOne({
     user_id: id,
@@ -39,7 +39,7 @@ export const readStaff = (req, res) => {
     if (err) {
       return res.status(400).json({
         err,
-        error: "data does not exist",
+        error: 'data does not exist',
       });
     }
     res.json({ data });
@@ -51,11 +51,11 @@ export const removeStaff = (req, res) => {
   staff.remove((err) => {
     if (err) {
       return res.status(400).json({
-        error: "delete staff failure",
+        error: 'delete staff failure',
       });
     }
     res.json({
-      message: "Delete staff successfully",
+      message: 'Delete staff successfully',
     });
   });
 };
@@ -67,6 +67,9 @@ export const createStaff = (req, res, next) => {
       return res.status(400).json({
         error: err,
       });
+    }
+    if (!req.body.service_id) {
+      return res.json({ data });
     }
     req.staffWork = {
       staff_id: data._id,
@@ -83,12 +86,12 @@ export const createEmployeeJobDetail = (req, res) => {
     if (err) {
       console.log(err);
       return res.status(400).json({
-        error: "Add employee job detail failed!",
+        error: 'Add employee job detail failed!',
       });
     }
     res.json({
       data: req.newStaff,
-      message: "Create employee job detail successfully",
+      message: 'Create employee job detail successfully',
       work: data,
     });
   });
@@ -114,20 +117,20 @@ export const updateStaff = (req, res, next) => {
 };
 
 export const findStaffInJob = (req, res, next) => {
-  const ObjectId = require("mongodb").ObjectId;
+  const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(req.updateStaff.staff_id);
   EmployeeJobDetail.findOne({
     staff_id: id,
   })
     .populate([
-      { path: "service_id" },
-      { path: "staff_id", populate: { path: "user_id" } },
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
     ])
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({
           err,
-          error: "Data does not exist",
+          error: 'Data does not exist',
         });
       }
       req.dataJob = {
@@ -145,12 +148,12 @@ export const updateEmployeeJobDetail = (req, res) => {
   employeeJobDetail.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Update employee job detail failed!",
+        error: 'Update employee job detail failed!',
       });
     }
     res.json({
       data: req.updateNew,
-      message: "Update staff and employee job detail successfully",
+      message: 'Update staff and employee job detail successfully',
       employeeJobDetail: data,
     });
   });
@@ -158,18 +161,18 @@ export const updateEmployeeJobDetail = (req, res) => {
 
 export const searchStaff = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
-  let name = req.query.name ? req.query.name : "";
+  let name = req.query.name ? req.query.name : '';
   Staff.find({
     status: {
       $regex: `${name}`,
-      $options: "$i",
+      $options: '$i',
     },
   })
     .limit(limit)
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
-          error: "Staff not found",
+          error: 'Staff not found',
         });
       }
       res.json({ data });
@@ -177,8 +180,8 @@ export const searchStaff = (req, res) => {
 };
 
 export const findStaff = (req, res) => {
-  let userId = req.query.userId ? req.query.userId : "";
-  const ObjectId = require("mongodb").ObjectId;
+  let userId = req.query.userId ? req.query.userId : '';
+  const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(userId);
   Staff.findOne({
     user_id: id,
@@ -186,7 +189,7 @@ export const findStaff = (req, res) => {
     if (err) {
       return res.status(400).json({
         err,
-        error: "data does not exist",
+        error: 'data does not exist',
       });
     }
     res.json({ data });
