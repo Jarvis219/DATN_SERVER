@@ -1,13 +1,13 @@
-import WorkdayHistory from "../models/workdayHistoryModel";
-import _ from "lodash";
+import WorkdayHistory from '../models/workdayHistoryModel';
+import _ from 'lodash';
 
 export const listWorkdayHistory = (req, res) => {
   WorkdayHistory.find()
-    .populate("user_id")
+    .populate('staff_id')
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({
-          error: "Workday History not found!",
+          error: 'Workday History not found!',
         });
       }
       res.status(200).json({ data });
@@ -19,26 +19,28 @@ export const createWorkdayHistory = (req, res) => {
   workdayHistory.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Add workday history failed!",
+        error: 'Add workday history failed!',
       });
     }
     res.json({
       data,
-      message: "Create workday history successfully",
+      message: 'Create workday history successfully',
     });
   });
 };
 
 export const workdayHistoryId = (req, res, next, id) => {
-  WorkdayHistory.findById(id).exec((err, data) => {
-    if (err) {
-      return res.status(404).json({
-        error: "Workday history not found!",
-      });
-    }
-    req.workdayHistory = data;
-    next();
-  });
+  WorkdayHistory.findById(id)
+    .populate('staff_id')
+    .exec((err, data) => {
+      if (err) {
+        return res.status(404).json({
+          error: 'Workday history not found!',
+        });
+      }
+      req.workdayHistory = data;
+      next();
+    });
 };
 
 export const readWorkdayHistory = (req, res) => {
@@ -50,11 +52,11 @@ export const removeWorkdayHistory = (req, res) => {
   workdayHistory.remove((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Delete workday history failed!",
+        error: 'Delete workday history failed!',
       });
     }
     res.json({
-      message: "Delete workday history successfully",
+      message: 'Delete workday history successfully',
       data,
     });
   });
@@ -66,11 +68,11 @@ export const updateWorkdayHistory = (req, res) => {
   workdayHistory.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Update Workday history failed!",
+        error: 'Update Workday history failed!',
       });
     }
     res.json({
-      message: "Update Workday history successfully",
+      message: 'Update Workday history successfully',
       data,
     });
   });

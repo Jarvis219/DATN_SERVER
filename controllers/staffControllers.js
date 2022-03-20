@@ -107,6 +107,9 @@ export const updateStaff = (req, res, next) => {
         error: err,
       });
     }
+    if (req.body.status) {
+      return res.json({ data });
+    }
     req.updateStaff = {
       staff_id: data._id,
       service_id: req.body.service_id,
@@ -133,6 +136,7 @@ export const findStaffInJob = (req, res, next) => {
           error: 'Data does not exist',
         });
       }
+
       req.dataJob = {
         id: data._id,
         ...req.updateStaff,
