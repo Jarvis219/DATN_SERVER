@@ -1,32 +1,45 @@
-import EmployeeJobDetail from "../models/employeeJobDetailModel";
-import _ from "lodash";
+import EmployeeJobDetail from '../models/employeeJobDetailModel';
+import _ from 'lodash';
 
 export const listEmployeeJobDetail = (req, res) => {
   EmployeeJobDetail.find()
     .populate([
-      { path: "service_id" },
-      { path: "staff_id", populate: { path: "user_id" } },
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
     ])
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({
-          error: "Employee job detail not found!",
+          error: 'Employee job detail not found!',
         });
       }
       res.status(200).json({ data });
     });
 };
 
+export const createEmployeeJobDetail = (req, res) => {
+  const employeeJobDetail = new EmployeeJobDetail(req.body);
+  employeeJobDetail.save((err, data) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: 'Error creating employee job detail',
+      });
+    }
+    res.status(200).json({ data });
+  });
+};
+
 export const employeeJobDetailId = (req, res, next, id) => {
   EmployeeJobDetail.findById(id)
     .populate([
-      { path: "service_id" },
-      { path: "staff_id", populate: { path: "user_id" } },
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
     ])
     .exec((err, data) => {
       if (err) {
         return res.status(404).json({
-          error: "employee job detail not found!",
+          error: 'employee job detail not found!',
         });
       }
       req.employeeJobDetail = data;
@@ -43,11 +56,11 @@ export const removeEmployeeJobDetail = (req, res) => {
   employeeJobDetail.remove((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Delete employee job detail failed!",
+        error: 'Delete employee job detail failed!',
       });
     }
     res.json({
-      message: "Delete employee job detail successfully",
+      message: 'Delete employee job detail successfully',
       data,
     });
   });
@@ -59,32 +72,32 @@ export const updateEmployeeJobDetail = (req, res) => {
   employeeJobDetail.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Update employee job detail failed!",
+        error: 'Update employee job detail failed!',
       });
     }
     res.json({
-      message: "Update employee job detail successfully",
+      message: 'Update employee job detail successfully',
       data,
     });
   });
 };
 
 export const findStaff = (req, res) => {
-  let staffId = req.query.staffId ? req.query.staffId : "";
-  const ObjectId = require("mongodb").ObjectId;
+  let staffId = req.query.staffId ? req.query.staffId : '';
+  const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(staffId);
   EmployeeJobDetail.findOne({
     staff_id: id,
   })
     .populate([
-      { path: "service_id" },
-      { path: "staff_id", populate: { path: "user_id" } },
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
     ])
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({
           err,
-          error: "Data does not exist",
+          error: 'Data does not exist',
         });
       }
       res.json({ data });
@@ -92,8 +105,8 @@ export const findStaff = (req, res) => {
 };
 
 export const findStaffToId = (req, res, next) => {
-  let staff = req.query.staff ? req.query.staff : "";
-  const ObjectId = require("mongodb").ObjectId;
+  let staff = req.query.staff ? req.query.staff : '';
+  const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(staff);
   EmployeeJobDetail.findOne({
     staff_id: id,
@@ -101,7 +114,7 @@ export const findStaffToId = (req, res, next) => {
     if (err) {
       return res.status(400).json({
         err,
-        error: "Data does not exist",
+        error: 'Data does not exist',
       });
     }
     req.updateEmployee = data;
@@ -118,11 +131,11 @@ export const updateSchedule = (req, res) => {
   employeeJobDetail.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Update employee job detail failed!",
+        error: 'Update employee job detail failed!',
       });
     }
     res.json({
-      message: "Update employee job detail successfully",
+      message: 'Update employee job detail successfully',
       data,
     });
   });
