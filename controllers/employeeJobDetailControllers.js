@@ -25,8 +25,10 @@ export const createEmployeeJobDetail = async (req, res) => {
       { path: "service_id" },
       { path: "staff_id", populate: { path: "user_id" } },
     ]);
+    console.log(data);
     return res.status(200).json({ data });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       error: "Error creating employee job detail",
     });
@@ -69,20 +71,24 @@ export const removeEmployeeJobDetail = (req, res) => {
   });
 };
 
-export const updateEmployeeJobDetail = (req, res) => {
+export const updateEmployeeJobDetail = async (req, res) => {
   let employeeJobDetail = req.employeeJobDetail;
   employeeJobDetail = _.assignIn(employeeJobDetail, req.body);
-  employeeJobDetail.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: "Update employee job detail failed!",
-      });
-    }
-    res.json({
+  try {
+    const current = await employeeJobDetail.save();
+    const data = await current.populate([
+      { path: "service_id" },
+      { path: "staff_id", populate: { path: "user_id" } },
+    ]);
+    return res.json({
       message: "Update employee job detail successfully",
       data,
     });
-  });
+  } catch (err) {
+    return res.status(400).json({
+      error: "Update employee job detail failed!",
+    });
+  }
 };
 
 export const findStaff = (req, res) => {
