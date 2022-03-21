@@ -33,6 +33,10 @@ export const notification = (io) => {
             socket.emit(`send-notification-admin`, noti);
           });
           break;
+        case "notification-create-order":
+          break;
+        case "list-notifications-order":
+          break;
         default:
           break;
       }
