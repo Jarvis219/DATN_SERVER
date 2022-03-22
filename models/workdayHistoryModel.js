@@ -20,20 +20,15 @@ const WorkdayHistory = new mongoose.Schema(
       required: true,
       ref: "Staff",
     },
+    // 4|2 đi làm| nghỉ làm
     workday_status: {
       type: Number,
       required: true,
-      default: 4,
+      default: 2,
     },
     workday_description: {
       type: String,
       maxLength: 1000,
-    },
-
-    // 4|2 đi làm| nghỉ làm
-    workday_action: {
-      type: Number,
-      default: 2,
     },
   },
   { timestamps: true }
