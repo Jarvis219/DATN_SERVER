@@ -34,8 +34,10 @@ export const productId = (req, res, next, id) => {
   Product.findById(id)
     .populate('category_id', 'name')
     .exec((err, data) => {
-      if (err) {
-        return res.status(400).json({ error: err });
+      if (err || !data) {
+        return res.status(400).json({ 
+          error: err 
+        });
       }
       req.product = data;
       next();
@@ -48,7 +50,7 @@ export const readProduct = (req, res) => {
 
 export const removeProduct = (req, res) => {
   let product = req.product;
-  product.remove((err) => {
+  product.remove((err, data) => {
     if (err) {
       return res.status(400).json({
         error: 'Delete product failure',
@@ -56,6 +58,7 @@ export const removeProduct = (req, res) => {
     }
     res.json({
       message: 'Delete product successfully',
+      data
     });
   });
 };
