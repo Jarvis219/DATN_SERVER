@@ -25,10 +25,8 @@ export const createEmployeeJobDetail = async (req, res) => {
       { path: "service_id" },
       { path: "staff_id", populate: { path: "user_id" } },
     ]);
-    console.log(data);
     return res.status(200).json({ data });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       error: "Error creating employee job detail",
     });

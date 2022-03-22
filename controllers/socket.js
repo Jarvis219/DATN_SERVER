@@ -51,26 +51,3 @@ export const notification = (io) => {
     });
   });
 };
-
-// export const message = (io) => {
-//   io.on('connection', (socket) => {
-//     socket.on('disconnect', () => {
-//       // console.log("disconnect");
-//     });
-//     socket.on('test', (data) => {
-//       socket.emit('test1', 'mess');
-//     });
-//     socket.on('send-message', (room, data) => {
-//       if (room === '') {
-//         socket.broadcast.emit('private-message', data);
-//       } else {
-//         console.log(room, data);
-//         socket.in(room).emit('private-message', data);
-//       }
-//     });
-
-//     socket.on('join-room', (room) => {
-//       socket.join(room);
-//     });
-//   });
-// };
