@@ -1,11 +1,11 @@
-import Customer from "../models/customerModel";
-import _ from "lodash";
+import Customer from '../models/customerModel';
+import _ from 'lodash';
 
 export const listCustomer = (req, res) => {
   Customer.find().exec((err, data) => {
     if (err) {
       return res.status(500).json({
-        error: "Customer not found!",
+        error: 'Customer not found!',
       });
     }
     res.status(200).json({ data });
@@ -17,12 +17,12 @@ export const createCustomer = (req, res) => {
   customer.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Add Customer failed!",
+        error: 'Add Customer failed!',
       });
     }
     res.json({
       data,
-      message: "Create Customer successfully",
+      message: 'Create Customer successfully',
     });
   });
 };
@@ -31,7 +31,7 @@ export const customerId = (req, res, next, id) => {
   Customer.findById(id).exec((err, data) => {
     if (err) {
       return res.status(404).json({
-        error: "Customer not found!",
+        error: 'Customer not found!',
       });
     }
     req.customer = data;
@@ -48,11 +48,11 @@ export const removeCustomer = (req, res) => {
   customer.remove((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Delete customer failed!",
+        error: 'Delete customer failed!',
       });
     }
     res.json({
-      message: "Delete customer successfully",
+      message: 'Delete customer successfully',
       data,
     });
   });
@@ -64,11 +64,11 @@ export const updateCustomer = (req, res) => {
   customer.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Update customer failed!",
+        error: 'Update customer failed!',
       });
     }
     res.json({
-      message: "Update customer successfully",
+      message: 'Update customer successfully',
       data,
     });
   });
@@ -80,7 +80,7 @@ export const listCustomerRelated = (req, res) => {
   }).exec((err, data) => {
     if (err) {
       res.status(400).json({
-        error: "Customer not found!",
+        error: 'Customer not found!',
       });
     }
     res.json({ data });
@@ -88,13 +88,13 @@ export const listCustomerRelated = (req, res) => {
 };
 
 export const filterCustomerPhone = (req, res) => {
-  const phone = req.query.phone ? req.query.phone : "";
+  const phone = req.query.phone ? req.query.phone : '';
   Customer.find({
     customer_phone: phone,
   }).exec((err, data) => {
     if (err) {
       res.status(400).json({
-        error: "Customer not found!",
+        error: 'Customer not found!',
       });
     }
     res.json({ data });

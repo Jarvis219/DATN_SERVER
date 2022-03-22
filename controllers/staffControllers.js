@@ -60,13 +60,13 @@ export const removeStaff = (req, res) => {
   });
 };
 
-export const createStaff = (req, res, next) => {
-  const staff = new Staff(req.body);
-  staff.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
+export const createStaff = async (req, res, next) => {
+  const staff = await new Staff(req.body);
+  try {
+    const dataStaff = await staff.save();
+    const data = await dataStaff.populate("user_id");
+    if (!req.body.service_id) {
+      return res.json({ data });
     }
     req.staffWork = {
       staff_id: data._id,
@@ -74,7 +74,13 @@ export const createStaff = (req, res, next) => {
     };
     req.newStaff = data;
     next();
-  });
+  } catch (error) {
+    if (error) {
+      return res.status(400).json({
+        error: error,
+      });
+    }
+  }
 };
 
 export const createEmployeeJobDetail = (req, res) => {
@@ -104,6 +110,9 @@ export const updateStaff = (req, res, next) => {
         error: err,
       });
     }
+    if (req.body.status) {
+      return res.json({ data });
+    }
     req.updateStaff = {
       staff_id: data._id,
       service_id: req.body.service_id,
@@ -130,6 +139,7 @@ export const findStaffInJob = (req, res, next) => {
           error: "Data does not exist",
         });
       }
+
       req.dataJob = {
         id: data._id,
         ...req.updateStaff,

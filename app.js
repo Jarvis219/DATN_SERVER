@@ -2,11 +2,21 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import { message, notification } from "./controllers/socket";
+import { notification } from "./controllers/socket";
+import { scheduleJob, RecurrenceRule } from "node-schedule";
+import { handleUpdateWorkdayHistory } from "./controllers/handleUpdateWorkdayHistory";
 const { instrument } = require("@socket.io/admin-ui");
 
 const app = express();
 dotenv.config();
+
+const rule = new RecurrenceRule();
+rule.hour = 0;
+rule.minute = 0;
+rule.second = 1;
+scheduleJob(rule, function () {
+  handleUpdateWorkdayHistory();
+});
 
 // server with socket
 const server = require("http").Server(app);
