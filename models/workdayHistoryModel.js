@@ -1,17 +1,24 @@
-import mongoose from 'mongoose';
-import moment from 'moment';
+import mongoose from "mongoose";
+import moment from "moment-timezone";
 const { ObjectId } = mongoose.Schema;
 const WorkdayHistory = new mongoose.Schema(
   {
-    day: {
+    time_start: {
       type: String,
       required: true,
-      default: moment().format('YYYY-MM-DD') + ' 08:00:00',
+      default:
+        moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY") + " 08:00:00",
+    },
+    time_end: {
+      type: String,
+      required: true,
+      default:
+        moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY") + " 17:00:00",
     },
     staff_id: {
       type: ObjectId,
       required: true,
-      ref: 'Staff',
+      ref: "Staff",
     },
     workday_status: {
       type: Number,
@@ -22,8 +29,14 @@ const WorkdayHistory = new mongoose.Schema(
       type: String,
       maxLength: 1000,
     },
+
+    // 4|2 đi làm| nghỉ làm
+    workday_action: {
+      type: Number,
+      default: 2,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('WorkdayHistory', WorkdayHistory);
+module.exports = mongoose.model("WorkdayHistory", WorkdayHistory);
