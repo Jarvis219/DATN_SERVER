@@ -6,7 +6,7 @@ export const listService = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('category_id', 'name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +17,7 @@ export const listService = (req, res) => {
 
 export const serviceId = (req, res, next, id) => {
   Service.findById(id)
-    .populate('category_id', 'name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -86,7 +86,7 @@ export const listServiceRelated = (req, res) => {
     category: req.service.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate('category_id', '_id name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         res.status(400).json({

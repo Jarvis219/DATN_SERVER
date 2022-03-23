@@ -6,7 +6,7 @@ export const listProduct = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('category_id', 'name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -32,7 +32,7 @@ export const createProduct = (req, res) => {
 
 export const productId = (req, res, next, id) => {
   Product.findById(id)
-    .populate('category_id', 'name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err || !data) {
         return res.status(400).json({ 
@@ -89,7 +89,7 @@ export const listProductRelated = (req, res) => {
     category_id: req.product.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate('category_id', '_id name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
