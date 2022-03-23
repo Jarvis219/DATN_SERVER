@@ -21,6 +21,11 @@ const EmployeeJobDetailSchema = new mongoose.Schema(
     dayOff: {
       type: Array,
     },
+    active: {
+      type: Boolean,
+      default: true,
+      required: true,
+    },
   },
   {
     timestamps: true,
