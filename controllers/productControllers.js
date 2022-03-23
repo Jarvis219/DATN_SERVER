@@ -6,7 +6,7 @@ export const listProduct = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('category_id', 'name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -15,24 +15,37 @@ export const listProduct = (req, res) => {
     });
 };
 
-export const createProduct = (req, res) => {
-  const product = new Product(req.body);
-  product.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    res.json({
-      data,
-      message: 'Create product successfully',
-    });
-  });
+export const createProduct = async (req, res) => {
+  const product = await new Product(req.body);
+  try {
+    const dataProduct = await product.save();
+    const data = await dataProduct.populate("category_id", "name");
+    return res.status(200).json({
+      message: "Create product successfully",
+      data
+    })
+  } catch (error) {
+    return res.status(400).json({
+      error: "Add failed!"
+    })
+  }
+
+  // product.save((err, data) => {
+  //   if (err) {
+  //     return res.status(400).json({
+  //       error: err,
+  //     });
+  //   }
+  //   res.json({
+  //     data,
+  //     message: 'Create product successfully',
+  //   });
+  // });
 };
 
 export const productId = (req, res, next, id) => {
   Product.findById(id)
-    .populate('category_id', 'name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err || !data) {
         return res.status(400).json({ 
@@ -63,21 +76,34 @@ export const removeProduct = (req, res) => {
   });
 };
 
-export const updateProduct = (req, res) => {
+export const updateProduct = async (req, res) => {
   let product = req.product;
   product = _.assignIn(product, req.body);
 
-  product.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    res.json({
-      data,
-      message: 'Update product successfully',
+  try {
+    const dataProduct = await product.save();
+    const data = await dataProduct.populate("category_id", "name") 
+    return res.status(400).json({
+      message: "Update successfully!",
+      data
     });
-  });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Update failed!"
+    })
+  }
+
+  // product.save((err, data) => {
+  //   if (err) {
+  //     return res.status(400).json({
+  //       error: err,
+  //     });
+  //   }
+  //   res.json({
+  //     data,
+  //     message: 'Update product successfully',
+  //   });
+  // });
 };
 
 export const listProductRelated = (req, res) => {
@@ -89,7 +115,7 @@ export const listProductRelated = (req, res) => {
     category_id: req.product.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate('category_id', '_id name')
+    .populate("category_id", "name")
     .exec((err, data) => {
       if (err) {
         res.status(400).json({

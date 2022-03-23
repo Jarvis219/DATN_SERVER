@@ -6,7 +6,7 @@ export const listService = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate('category_id', 'name')
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +17,7 @@ export const listService = (req, res) => {
 
 export const serviceId = (req, res, next, id) => {
   Service.findById(id)
-    .populate('category_id', 'name')
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -45,36 +45,62 @@ export const removeServices = (req, res) => {
   });
 };
 
-export const createService = (req, res) => {
+export const createService = async (req, res) => {
   const service = new Service(req.body);
-  service.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    res.json({
-      data,
-      message: 'Create service successfully',
+  try {
+    const dataService = await service.save();
+    const data = await dataService.populate("category_id", "category_name");
+    return res.status(200).json({ 
+      message: "Create service successfully",
+      data 
     });
-  });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Create failed",
+    });
+  }
+
+  // service.save((err, data) => {
+  //   if (err) {
+  //     return res.status(400).json({
+  //       error: err,
+  //     });
+  //   }
+  //   res.json({
+  //     data,
+  //     message: 'Create service successfully',
+  //   });
+  // });
 };
 
-export const updateService = (req, res) => {
+export const updateService = async (req, res) => {
   let service = req.service;
   service = _.assignIn(service, req.body);
 
-  service.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-    res.json({
-      data,
-      message: 'Update product successfully',
+  try {
+    const dataService = await service.save();
+    const data = await dataService.populate("category_id", "category_name");
+    return res.status(200).json({
+      message: 'Update service successfully',
+      data
     });
-  });
+  } catch (error) {
+    return res.status(400).json({
+      error: "Update failed"
+    })
+  }
+
+  // service.save((err, data) => {
+  //   if (err) {
+  //     return res.status(400).json({
+  //       error: err,
+  //     });
+  //   }
+  //   res.json({
+  //     data,
+  //     message: 'Update product successfully',
+  //   });
+  // });
 };
 
 export const listServiceRelated = (req, res) => {
@@ -86,7 +112,7 @@ export const listServiceRelated = (req, res) => {
     category: req.service.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate('category_id', '_id name')
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
