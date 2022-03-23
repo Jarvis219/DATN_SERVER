@@ -7,13 +7,19 @@ const NotificationStaff = new mongoose.Schema(
       required: true,
       ref: 'Staff',
     },
-    appointments_id: {
-      type: ObjectId,
-      ref: 'Appointment',
+    path_url: {
+      type: String,
     },
-    order_id: {
-      type: ObjectId,
-      ref: 'Order',
+    path_id: {
+      type: String,
+    },
+    photo: {
+      type: String,
+    },
+    title: {
+      type: String,
+      required: true,
+      default: 'Thông báo',
     },
     content: {
       type: String,
@@ -24,9 +30,6 @@ const NotificationStaff = new mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
-    },
-    period: {
-      type: String,
     },
     // 0: 'notifications-service',
     // 1: 'notifications-order',
