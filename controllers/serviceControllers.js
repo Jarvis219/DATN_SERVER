@@ -6,7 +6,7 @@ export const listService = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate("category_id", "name")
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -17,7 +17,7 @@ export const listService = (req, res) => {
 
 export const serviceId = (req, res, next, id) => {
   Service.findById(id)
-    .populate("category_id", "name")
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         return res.status(500).json({ Error: err });
@@ -49,7 +49,7 @@ export const createService = async (req, res) => {
   const service = new Service(req.body);
   try {
     const dataService = await service.save();
-    const data = await dataService.populate("category_id", "name");
+    const data = await dataService.populate("category_id", "category_name");
     return res.status(200).json({ 
       message: "Create service successfully",
       data 
@@ -79,7 +79,7 @@ export const updateService = async (req, res) => {
 
   try {
     const dataService = await service.save();
-    const data = await dataService.populate("category_id", "name");
+    const data = await dataService.populate("category_id", "category_name");
     return res.status(200).json({
       message: 'Update service successfully',
       data
@@ -112,7 +112,7 @@ export const listServiceRelated = (req, res) => {
     category: req.service.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate("category_id", "name")
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
