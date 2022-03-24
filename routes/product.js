@@ -14,7 +14,7 @@ import {
 const router = express.Router();
 
 router.get('/list-search/product', listSearch);
-router.get('/filter-category', filterCategory);
+router.get('/filter-category-product', filterCategory);
 router.get('/list-product', listProduct);
 router.get('/list-related/product', listProductRelated);
 router.get('/read-product/:id', readProduct);
