@@ -1,19 +1,18 @@
 import mongoose from "mongoose";
 import moment from "moment-timezone";
+
 const { ObjectId } = mongoose.Schema;
 const WorkdayHistory = new mongoose.Schema(
   {
     time_start: {
       type: String,
       required: true,
-      default:
-        moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY") + " 08:00:00",
+      default: "0",
     },
     time_end: {
       type: String,
       required: true,
-      default:
-        moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY") + " 17:00:00",
+      default: "0",
     },
     staff_id: {
       type: ObjectId,
@@ -29,6 +28,13 @@ const WorkdayHistory = new mongoose.Schema(
     workday_description: {
       type: String,
       maxLength: 1000,
+    },
+    day: {
+      type: String,
+      required: true,
+      default: moment(new Date().setHours(new Date().getHours() + 1))
+        .tz("Asia/Ho_Chi_Minh")
+        .format("YYYY-MM-DD"),
     },
   },
   { timestamps: true }
