@@ -44,7 +44,7 @@ export const notification = (io) => {
                 );
               });
               listNotifications().then((noti) => {
-                socket.broadcast.emit(`send-notification-admin`, noti);
+                socket.emit(`send-notification-admin`, noti);
               });
             })
             .catch((err) => {
