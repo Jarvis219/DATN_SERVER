@@ -34,7 +34,7 @@ const WorkdayHistory = new mongoose.Schema(
       required: true,
       default: moment(new Date().setHours(new Date().getHours() + 1))
         .tz("Asia/Ho_Chi_Minh")
-        .format("YYYY-MM-DD HH:mm:ss"),
+        .format("YYYY-MM-DD"),
     },
   },
   { timestamps: true }
