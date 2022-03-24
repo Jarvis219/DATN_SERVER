@@ -159,6 +159,6 @@ export const filterCategory = (req, res) => {
         error: 'Data does not exist',
       });
     }
-    res.json({ data });
+    res.status(200).json({ data });
   });
 };
