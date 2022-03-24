@@ -150,7 +150,7 @@ export const filterCategory = (req, res) => {
   let category = req.query.category ? req.query.category : '';
   const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(category);
-  Product.findOne({
+  Product.find({
     category_id: id,
   }).exec((err, data) => {
     if (err) {
@@ -159,6 +159,6 @@ export const filterCategory = (req, res) => {
         error: 'Data does not exist',
       });
     }
-    res.json({ data });
+    res.status(200).json({ data });
   });
 };
