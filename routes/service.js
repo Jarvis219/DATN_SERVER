@@ -14,7 +14,7 @@ import {
 const router = express.Router();
 
 router.get('/list-search/service', listSearch);
-router.get('/filter-category', filterCategory);
+router.get('/filter-category-service', filterCategory);
 router.get('/list-service', listService);
 router.get('/list-related/service', listServiceRelated);
 router.get('/read-service/:id', serviceId, readService);

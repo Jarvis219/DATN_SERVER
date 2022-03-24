@@ -9,7 +9,7 @@ export const listService = (req, res) => {
     .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
-        return res.status(500).json({ Error: err });
+        return res.status(400).json({ error: err });
       }
       return res.status(200).json({ data });
     });
@@ -20,7 +20,7 @@ export const serviceId = (req, res, next, id) => {
     .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
-        return res.status(500).json({ Error: err });
+        return res.status(400).json({ error: err });
       }
       req.service = data;
       next();
@@ -39,7 +39,7 @@ export const removeServices = (req, res) => {
         error: 'delete service failure',
       });
     }
-    res.json({
+    res.status(200).json({
       message: 'Delete service successfully',
     });
   });
