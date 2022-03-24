@@ -32,7 +32,9 @@ const WorkdayHistory = new mongoose.Schema(
     day: {
       type: String,
       required: true,
-      default: moment().tz("Asia/Ho_Chi_Minh").format("YYYY-MM-DD"),
+      default: moment(new Date())
+        .tz("Asia/Ho_Chi_Minh")
+        .format("YYYY-MM-DD HH:mm:ss"),
     },
   },
   { timestamps: true }
