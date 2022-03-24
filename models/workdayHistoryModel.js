@@ -6,14 +6,12 @@ const WorkdayHistory = new mongoose.Schema(
     time_start: {
       type: String,
       required: true,
-      default:
-        moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY") + " 08:00:00",
+      default: moment().tz("Etc/GMT-7").format("DD-MM-YYYY hh:mm:ss"),
     },
     time_end: {
       type: String,
       required: true,
-      default:
-        moment().tz("Asia/Ho_Chi_Minh").format("DD-MM-YYYY") + " 17:00:00",
+      default: "0",
     },
     staff_id: {
       type: ObjectId,
