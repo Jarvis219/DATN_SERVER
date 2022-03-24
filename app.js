@@ -12,7 +12,7 @@ dotenv.config();
 
 const rule = new RecurrenceRule();
 rule.hour = 10;
-rule.minute = 13;
+rule.minute = 17;
 rule.tz = "Etc/GMT-7";
 scheduleJob(rule, function () {
   handleUpdateWorkdayHistory();
