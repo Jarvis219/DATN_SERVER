@@ -6,7 +6,7 @@ export const listProduct = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate("category_id", "name")
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -19,7 +19,7 @@ export const createProduct = async (req, res) => {
   const product = await new Product(req.body);
   try {
     const dataProduct = await product.save();
-    const data = await dataProduct.populate("category_id", "name");
+    const data = await dataProduct.populate("category_id", "category_name");
     return res.status(200).json({
       message: "Create product successfully",
       data
@@ -45,7 +45,7 @@ export const createProduct = async (req, res) => {
 
 export const productId = (req, res, next, id) => {
   Product.findById(id)
-    .populate("category_id", "name")
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err || !data) {
         return res.status(400).json({ 
@@ -69,7 +69,7 @@ export const removeProduct = (req, res) => {
         error: 'Delete product failure',
       });
     }
-    res.json({
+    res.status(200).json({
       message: 'Delete product successfully',
       data
     });
@@ -82,8 +82,8 @@ export const updateProduct = async (req, res) => {
 
   try {
     const dataProduct = await product.save();
-    const data = await dataProduct.populate("category_id", "name") 
-    return res.status(400).json({
+    const data = await dataProduct.populate("category_id", "category_name") 
+    return res.status(200).json({
       message: "Update successfully!",
       data
     });
@@ -115,7 +115,7 @@ export const listProductRelated = (req, res) => {
     category_id: req.product.category, // lấy theo thể loại
   })
     .limit(limit)
-    .populate("category_id", "name")
+    .populate("category_id", "category_name")
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
@@ -150,7 +150,7 @@ export const filterCategory = (req, res) => {
   let category = req.query.category ? req.query.category : '';
   const ObjectId = require('mongodb').ObjectId;
   const id = new ObjectId(category);
-  Product.findOne({
+  Product.find({
     category_id: id,
   }).exec((err, data) => {
     if (err) {
@@ -159,6 +159,6 @@ export const filterCategory = (req, res) => {
         error: 'Data does not exist',
       });
     }
-    res.json({ data });
+    res.status(200).json({ data });
   });
 };
