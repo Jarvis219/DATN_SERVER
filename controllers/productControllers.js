@@ -107,12 +107,10 @@ export const updateProduct = async (req, res) => {
 };
 
 export const listProductRelated = (req, res) => {
-  let limit = req.query.limit ? req.query.limit : 4;
+  let limit = req.query.limit ? req.query.limit : 5;
   Product.find({
-    _id: {
-      $ne: req.product, // loại trừ
-    },
-    category_id: req.product.category, // lấy theo thể loại
+    _id: {$ne: req.product},  // loại trừ
+    category_id: req.product.category_id, // lấy theo thể loại
   })
     .limit(limit)
     .populate("category_id", "category_name")
@@ -152,7 +150,9 @@ export const filterCategory = (req, res) => {
   const id = new ObjectId(category);
   Product.find({
     category_id: id,
-  }).exec((err, data) => {
+  })
+  .populate("category_id", "category_name")
+  .exec((err, data) => {
     if (err) {
       return res.status(400).json({
         err,
