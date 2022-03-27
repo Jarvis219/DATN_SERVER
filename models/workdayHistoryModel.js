@@ -32,8 +32,8 @@ const WorkdayHistory = new mongoose.Schema(
     day: {
       type: String,
       required: true,
-      default: moment(new Date().setHours(new Date().getHours() + 9))
-        .tz('Asia/Ho_Chi_Minh')
+      default: moment(new Date().setHours(new Date().getHours() + 7))
+        .tz('Etc/GMT-7')
         .format('YYYY-MM-DD'),
     },
   },
