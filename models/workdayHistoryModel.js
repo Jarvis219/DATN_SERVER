@@ -34,6 +34,17 @@ const WorkdayHistory = new mongoose.Schema(
       required: true,
       default: moment().tz("Etc/GMT-7").format("YYYY-MM-DD"),
     },
+    verify: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    // 0 in | 1 out
+    type: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
