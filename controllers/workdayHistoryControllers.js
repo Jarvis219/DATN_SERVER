@@ -82,7 +82,7 @@ export const findWorkDayHistoryByStaffId = (req, res) => {
   WorkdayHistory.find({
     $and: [{ staff_id: req.query.staffId }, { day: req.query.day }],
   })
-    .populate('staff_id')
+    .populate([{ path: 'staff_id', populate: { path: 'user_id' } }])
     .exec((err, data) => {
       if (err) {
         return res.status(404).json({
