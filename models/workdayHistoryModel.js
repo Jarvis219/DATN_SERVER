@@ -32,7 +32,7 @@ const WorkdayHistory = new mongoose.Schema(
     day: {
       type: String,
       required: true,
-      default: moment().tz('Etc/GMT-7').format('YYYY-MM-DD'),
+      default: moment().tz('Etc/GMT-7').format('YYYY-MM-DD HH:mm:ss'),
     },
     verify: {
       type: Boolean,
