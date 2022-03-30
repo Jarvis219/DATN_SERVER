@@ -77,3 +77,18 @@ export const updateWorkdayHistory = (req, res) => {
     });
   });
 };
+
+export const findWorkDayHistoryByStaffId = (req, res) => {
+  WorkdayHistory.find({
+    $and: [{ staff_id: req.query.staffId }, { day: req.query.day }],
+  })
+    .populate([{ path: 'staff_id', populate: { path: 'user_id' } }])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(404).json({
+          error: 'Workday history not found!',
+        });
+      }
+      res.status(200).json({ data });
+    });
+};
