@@ -1,12 +1,12 @@
-import Product from '../models/productModel';
-import _ from 'lodash';
+import Product from "../models/productModel";
+import _ from "lodash";
 
 export const listProduct = (req, res) => {
   Product.find()
     .sort({
       updatedAt: -1,
     })
-    .populate("category_id", "category_name")
+    .populate([{ path: "category_id" }, { path: "brand_id" }])
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
@@ -19,15 +19,18 @@ export const createProduct = async (req, res) => {
   const product = await new Product(req.body);
   try {
     const dataProduct = await product.save();
-    const data = await dataProduct.populate("category_id", "category_name");
+    const data = await dataProduct.populate([
+      { path: "category_id" },
+      { path: "brand_id" },
+    ]);
     return res.status(200).json({
       message: "Create product successfully",
-      data
-    })
+      data,
+    });
   } catch (error) {
     return res.status(400).json({
-      error: "Add failed!"
-    })
+      error: "Add failed!",
+    });
   }
 
   // product.save((err, data) => {
@@ -45,11 +48,11 @@ export const createProduct = async (req, res) => {
 
 export const productId = (req, res, next, id) => {
   Product.findById(id)
-    .populate("category_id", "category_name")
+    .populate([{ path: "category_id" }, { path: "brand_id" }])
     .exec((err, data) => {
       if (err || !data) {
-        return res.status(400).json({ 
-          error: err 
+        return res.status(400).json({
+          error: err,
         });
       }
       req.product = data;
@@ -66,12 +69,12 @@ export const removeProduct = (req, res) => {
   product.remove((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: 'Delete product failure',
+        error: "Delete product failure",
       });
     }
     res.status(200).json({
-      message: 'Delete product successfully',
-      data
+      message: "Delete product successfully",
+      data,
     });
   });
 };
@@ -82,38 +85,29 @@ export const updateProduct = async (req, res) => {
 
   try {
     const dataProduct = await product.save();
-    const data = await dataProduct.populate("category_id", "category_name") 
+    const data = await dataProduct.populate([
+      { path: "category_id" },
+      { path: "brand_id" },
+    ]);
     return res.status(200).json({
       message: "Update successfully!",
-      data
+      data,
     });
   } catch (error) {
     return res.status(400).json({
-      error: "Update failed!"
-    })
+      error: "Update failed!",
+    });
   }
-
-  // product.save((err, data) => {
-  //   if (err) {
-  //     return res.status(400).json({
-  //       error: err,
-  //     });
-  //   }
-  //   res.json({
-  //     data,
-  //     message: 'Update product successfully',
-  //   });
-  // });
 };
 
 export const listProductRelated = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 5;
   Product.find({
-    _id: {$ne: req.product},  // loại trừ
+    _id: { $ne: req.product }, // loại trừ
     category_id: req.product.category_id, // lấy theo thể loại
   })
     .limit(limit)
-    .populate("category_id", "category_name")
+    .populate([{ path: "category_id" }, { path: "brand_id" }])
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
@@ -126,39 +120,43 @@ export const listProductRelated = (req, res) => {
 
 export const listSearch = (req, res) => {
   let limit = req.query.limit ? req.query.limit : 12;
-  let name = req.query.name ? req.query.name : '';
+  let name = req.query.name ? req.query.name : "";
   Product.find({
     product_name: {
       $regex: `${name}`,
-      $options: '$i',
+      $options: "$i",
     },
   })
     .limit(limit)
+    .populate([{ path: "category_id" }, { path: "brand_id" }])
     .exec((err, data) => {
       if (err) {
         res.status(400).json({
-          error: 'Product not found',
+          error: "Product not found",
         });
       }
       res.json({ data });
     });
 };
 
-export const filterCategory = (req, res) => {
-  let category = req.query.category ? req.query.category : '';
-  const ObjectId = require('mongodb').ObjectId;
-  const id = new ObjectId(category);
+export const filter_category_brand = (req, res) => {
+  let category = req.query.category ? req.query.category : "";
+  let brand = req.query.brand ? req.query.brand : "";
+  const ObjectId = require("mongodb").ObjectId;
+  const idCategory = new ObjectId(category);
+  const idBrand = new ObjectId(brand);
   Product.find({
-    category_id: id,
+    category_id: idCategory,
+    brand_id: idBrand,
   })
-  .populate("category_id", "category_name")
-  .exec((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        err,
-        error: 'Data does not exist',
-      });
-    }
-    res.status(200).json({ data });
-  });
+    .populate([{ path: "category_id" }, { path: "brand_id" }])
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          err,
+          error: "Data does not exist",
+        });
+      }
+      res.status(200).json({ data });
+    });
 };

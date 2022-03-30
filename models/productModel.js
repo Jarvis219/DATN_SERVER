@@ -48,6 +48,11 @@ const ProductSchema = new mongoose.Schema(
       ref: 'Category',
       required: true,
     },
+    brand_id: {
+      type: ObjectId,
+      ref: 'Brand',
+      required: true,
+    },
   },
   {
     timestamps: true,

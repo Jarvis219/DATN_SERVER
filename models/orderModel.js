@@ -11,7 +11,6 @@ const orderSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
-
   },
   address: {
     type: String,
@@ -20,12 +19,9 @@ const orderSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
-
   },
   email: {
     type: String,
-    required: true,
-
   },
   note: {
     type: String,

@@ -48,6 +48,7 @@ const employeeJobDetail = require('./routes/employeeJobDetail');
 const contactRouter = require('./routes/contact');
 const workdayHistoryRouter = require('./routes/workdayHistory');
 const orderRouter = require('./routes/order');
+const brandRouter = require('./routes/brand');
 
 //db connection
 mongoose
@@ -82,6 +83,7 @@ app.use('/api', cartRouter);
 app.use('/api', contactRouter);
 app.use('/api', workdayHistoryRouter);
 app.use('/api', orderRouter);
+app.use('/api', brandRouter);
 // api đặt lịch
 app.use('/api', appointmentRouter);
 app.use('/api', customerRouter);
