@@ -32,7 +32,6 @@ instrument(io, {
 });
 
 // Router
-<<<<<<< HEAD
 const authRouters = require('./routes/auth');
 const serviceRouter = require('./routes/service');
 const staffRouter = require('./routes/staff');
@@ -50,24 +49,6 @@ const contactRouter = require('./routes/contact');
 const workdayHistoryRouter = require('./routes/workdayHistory');
 const orderRouter = require('./routes/order');
 const brandRouter = require('./routes/brand');
-=======
-const authRouters = require("./routes/auth");
-const serviceRouter = require("./routes/service");
-const staffRouter = require("./routes/staff");
-const categoryRouter = require("./routes/category");
-const productRouter = require("./routes/product");
-const salaryRouter = require("./routes/salary");
-const userRouter = require("./routes/user");
-const appointmentRouter = require("./routes/appointment");
-const customerRouter = require("./routes/customer");
-const cartRouter = require("./routes/cart");
-const invoiceRouter = require("./routes/invoice");
-const detailInvoiceRouter = require("./routes/detailInvoice");
-const employeeJobDetail = require("./routes/employeeJobDetail");
-const contactRouter = require("./routes/contact");
-const workdayHistoryRouter = require("./routes/workdayHistory");
-const orderRouter = require("./routes/order");
->>>>>>> e6d21853a6ae1c0f82973ed049cc522a183d63b7
 
 //db connection
 mongoose
@@ -91,7 +72,6 @@ app.use(
 
 notification(io);
 
-<<<<<<< HEAD
 app.use('/api', authRouters);
 app.use('/api', serviceRouter);
 app.use('/api', staffRouter);
@@ -104,19 +84,6 @@ app.use('/api', contactRouter);
 app.use('/api', workdayHistoryRouter);
 app.use('/api', orderRouter);
 app.use('/api', brandRouter);
-=======
-app.use("/api", authRouters);
-app.use("/api", serviceRouter);
-app.use("/api", staffRouter);
-app.use("/api", categoryRouter);
-app.use("/api", productRouter);
-app.use("/api", salaryRouter);
-app.use("/api", userRouter);
-app.use("/api", cartRouter);
-app.use("/api", contactRouter);
-app.use("/api", workdayHistoryRouter);
-app.use("/api", orderRouter);
->>>>>>> e6d21853a6ae1c0f82973ed049cc522a183d63b7
 // api đặt lịch
 app.use("/api", appointmentRouter);
 app.use("/api", customerRouter);
