@@ -11,8 +11,8 @@ const app = express();
 dotenv.config();
 
 const rule = new RecurrenceRule();
-rule.hour = 8;
-rule.minute = 45;
+rule.hour = 9;
+rule.minute = 30;
 rule.tz = "Etc/GMT-7";
 scheduleJob(rule, function () {
 	handleUpdateWorkdayHistory();
