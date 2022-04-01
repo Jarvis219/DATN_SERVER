@@ -37,7 +37,7 @@ const WorkdayHistory = new mongoose.Schema(
 		verify: {
 			type: Boolean,
 			required: true,
-			default: false,
+			default: true,
 		},
 		// 0 in | 1 out | 2 chua check
 		type: {
