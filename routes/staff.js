@@ -1,16 +1,16 @@
 import express from "express";
 import {
-  listStaff,
-  staffId,
-  readStaff,
-  removeStaff,
-  updateStaff,
-  createStaff,
-  searchStaff,
-  findStaff,
-  createEmployeeJobDetail,
-  updateEmployeeJobDetail,
-  findStaffInJob,
+	listStaff,
+	staffId,
+	readStaff,
+	removeStaff,
+	updateStaff,
+	createStaff,
+	searchStaff,
+	findStaff,
+	createEmployeeJobDetail,
+	updateEmployeeJobDetail,
+	findStaffInJob,
 } from "../controllers/staffControllers";
 
 const router = express.Router();
@@ -25,10 +25,10 @@ router.post("/create-staff", createStaff, createEmployeeJobDetail);
 // ví dụ chuyển từ dịch vụ A->B thì cập nhật lại nhân viên vào dịch vụ B
 // tham số truyền vào là id của nhân viên và id của dịch vụ
 router.put(
-  "/update-staff/:id",
-  updateStaff,
-  findStaffInJob,
-  updateEmployeeJobDetail
+	"/update-staff/:id",
+	updateStaff,
+	findStaffInJob,
+	updateEmployeeJobDetail
 );
 router.delete("/remove-staff/:id", removeStaff);
 

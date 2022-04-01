@@ -1,13 +1,14 @@
 import express from "express";
 import {
-  listBrands,
-  createBrand,
-  brandId,
-  readBrand,
-  removeBrand,
-  updateBrand,
-  listBrandsRelated,
+	listBrands,
+	createBrand,
+	brandId,
+	readBrand,
+	removeBrand,
+	updateBrand,
+	listBrandsRelated,
 } from "../controllers/brandControllers";
+import { authToken, requireSignin, isAuth, isStaff } from "../middleware/token";
 
 const router = express.Router();
 
@@ -18,13 +19,34 @@ router.get("/list-brand", listBrands);
 router.get("/read-brand/:id", readBrand);
 
 //Thêm mới danh mục
-router.post("/create-brand", createBrand);
+router.post(
+	"/create-brand",
+	authToken,
+	requireSignin,
+	isAuth,
+	isStaff,
+	createBrand
+);
 
 //Cập nhật danh mục
-router.put("/update-brand/:id", updateBrand);
+router.put(
+	"/update-brand/:id",
+	authToken,
+	requireSignin,
+	isAuth,
+	isStaff,
+	updateBrand
+);
 
 //Xoá danh mục
-router.delete("/remove-brand/:id", removeBrand);
+router.delete(
+	"/remove-brand/:id",
+	authToken,
+	requireSignin,
+	isAuth,
+	isStaff,
+	removeBrand
+);
 
 //List Danh mục( ngoại trừ Danh mục hiện tại)
 router.get("/list-brand/related/:id", listBrandsRelated);

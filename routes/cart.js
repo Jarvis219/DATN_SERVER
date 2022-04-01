@@ -1,16 +1,16 @@
 import express from "express";
 import {
-    addCart,
-    listCart,
-    listCartUser,
-    cartByID,
-    removeCart,
-    readCart,
-    updateCart,
-    removeAllItem
+	addCart,
+	listCart,
+	listCartUser,
+	cartByID,
+	removeCart,
+	readCart,
+	updateCart,
+	removeAllItem,
 } from "../controllers/cartControllers";
 import { userID } from "../controllers/userControllers";
-// import { isAuth } from "../controllers/auth";
+
 const router = express.Router();
 
 router.get("/list-cart", listCart);
