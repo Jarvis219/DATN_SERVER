@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import { notification } from "./controllers/socket";
-import { scheduleJob, RecurrenceRule } from "node-schedule-tz";
+import { scheduleJob, RecurrenceRule, Range } from "node-schedule-tz";
 import { handleUpdateWorkdayHistory } from "./controllers/handleUpdateWorkdayHistory";
 const { instrument } = require("@socket.io/admin-ui");
 
@@ -11,8 +11,9 @@ const app = express();
 dotenv.config();
 
 const rule = new RecurrenceRule();
+rule.dayOfWeek = [0, new Range(0, 6)];
 rule.hour = 8;
-rule.minute = 20;
+rule.minute = 30;
 rule.tz = "Asia/Ho_Chi_Minh";
 scheduleJob(rule, function () {
 	handleUpdateWorkdayHistory();
