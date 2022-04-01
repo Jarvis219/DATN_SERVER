@@ -3,6 +3,7 @@ import _ from "lodash";
 import { v4 as uuidv4 } from "uuid";
 const User = require("../models/userModel");
 const expressJwt = require("express-jwt");
+export const tokenList = {};
 
 // use for login with google, facebook
 export const Login = async (req, res, next) => {
@@ -29,6 +30,19 @@ export const Login = async (req, res, next) => {
 				expiresIn: expires,
 			}
 		);
+
+		// create refreshToken
+		const refreshToken = jwt.sign(
+			{
+				_id: user._id,
+			},
+			process.env.JWT_REFRESH_TOKEN,
+			{
+				expiresIn: "20d",
+			}
+		);
+
+		tokenList[refreshToken] = user;
 
 		if (!user) {
 			const user = new User({
