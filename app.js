@@ -12,8 +12,8 @@ dotenv.config();
 
 const rule = new RecurrenceRule();
 rule.dayOfWeek = [0, new Range(0, 6)];
-rule.hour = 0;
-rule.minute = 1;
+rule.hour = 1;
+rule.minute = 20;
 rule.second = 10;
 rule.tz = 'Asia/Ho_Chi_Minh';
 scheduleJob(rule, function () {
