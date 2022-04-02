@@ -2,14 +2,18 @@ import Category from '../models/categoryModel';
 import _ from 'lodash';
 
 export const listCategories = (req, res) => {
-  Category.find().exec((err, data) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'Categories not found!',
-      });
-    }
-    res.status(200).json({ data });
-  });
+  Category.find()
+    .sort({
+      updatedAt: -1,
+    })
+    .exec((err, data) => {
+      if (err) {
+        return res.status(500).json({
+          error: 'Categories not found!',
+        });
+      }
+      res.status(200).json({ data });
+    });
 };
 
 export const createCategory = (req, res) => {

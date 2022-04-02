@@ -2,14 +2,18 @@ import DetailInvoice from '../models/detailInvoiceModel';
 import _ from 'lodash';
 
 export const listDetailInvoice = (req, res) => {
-  DetailInvoice.find().exec((err, data) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'DetailInvoice not found!',
-      });
-    }
-    res.status(200).json({ data });
-  });
+  DetailInvoice.find()
+    .sort({
+      updatedAt: -1,
+    })
+    .exec((err, data) => {
+      if (err) {
+        return res.status(500).json({
+          error: 'DetailInvoice not found!',
+        });
+      }
+      res.status(200).json({ data });
+    });
 };
 
 export const createDetailInvoice = (req, res) => {

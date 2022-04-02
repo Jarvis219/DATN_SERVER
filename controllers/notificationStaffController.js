@@ -59,19 +59,3 @@ export const removeNotificationStaff = (idNoti) => {
       });
   });
 };
-
-// export const updateNotificationStaff = (req, res) => {
-//   let notificationStaff = req.notificationStaff;
-//   notificationStaff = _.assignIn(notificationStaff, req.body);
-//   notificationStaff.save((err, data) => {
-//     if (err) {
-//       return res.status(400).json({
-//         error: 'Update notification failed!',
-//       });
-//     }
-//     res.json({
-//       message: 'Update notification successfully',
-//       data,
-//     });
-//   });
-// };

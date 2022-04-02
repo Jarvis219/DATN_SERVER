@@ -2,14 +2,18 @@ import Customer from '../models/customerModel';
 import _ from 'lodash';
 
 export const listCustomer = (req, res) => {
-  Customer.find().exec((err, data) => {
-    if (err) {
-      return res.status(500).json({
-        error: 'Customer not found!',
-      });
-    }
-    res.status(200).json({ data });
-  });
+  Customer.find()
+    .sort({
+      updatedAt: -1,
+    })
+    .exec((err, data) => {
+      if (err) {
+        return res.status(500).json({
+          error: 'Customer not found!',
+        });
+      }
+      res.status(200).json({ data });
+    });
 };
 
 export const createCustomer = (req, res) => {

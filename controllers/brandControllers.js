@@ -2,14 +2,18 @@ import Brand from '../models/brandModel';
 import _ from 'lodash';
 
 export const listBrands = (req, res) => {
-  Brand.find().exec((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Brand not found!',
-      });
-    }
-    res.status(200).json({ data });
-  });
+  Brand.find()
+    .sort({
+      updatedAt: -1,
+    })
+    .exec((err, data) => {
+      if (err) {
+        return res.status(400).json({
+          error: 'Brand not found!',
+        });
+      }
+      res.status(200).json({ data });
+    });
 };
 
 export const createBrand = (req, res) => {
