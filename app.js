@@ -12,8 +12,8 @@ dotenv.config();
 
 const rule = new RecurrenceRule();
 rule.dayOfWeek = [0, new Range(0, 6)];
-rule.hour = 12;
-rule.minute = 50;
+rule.hour = 1;
+rule.minute = 5;
 rule.tz = 'Asia/Ho_Chi_Minh';
 scheduleJob(rule, function () {
   handleUpdateWorkdayHistory();
