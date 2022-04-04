@@ -16,6 +16,7 @@ rule.hour = 1;
 rule.minute = 5;
 rule.tz = 'Asia/Ho_Chi_Minh';
 scheduleJob(rule, function () {
+  console.log('first');
   handleUpdateWorkdayHistory();
 });
 
