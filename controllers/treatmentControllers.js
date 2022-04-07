@@ -20,6 +20,7 @@ export const treatmentId = (req, res, next, id) => {
 			return res.status(500).json({ Error: err });
 		}
 		req.treatment = data;
+
 		next();
 	});
 };
@@ -65,19 +66,17 @@ export const createTreatment = (req, res, next) => {
 	});
 };
 
-export const updateTreatment = (req, res, next) => {
+export const updateTreatment = async (req, res, next) => {
 	let treatment = req.treatment;
 	treatment = _.assignIn(treatment, req.body);
 
-	treatment.save((err, data) => {
-		if (err) {
-			return res.status(400).json({
-				error: err,
-			});
-		}
-		res.json({
-			data,
-			message: "Update treatment successfully",
+	try {
+		const data = await treatment.save();
+		req.newTreatment = { data, service_id: req.body.service_id };
+		next();
+	} catch (error) {
+		return res.status(400).json({
+			error,
 		});
-	});
+	}
 };

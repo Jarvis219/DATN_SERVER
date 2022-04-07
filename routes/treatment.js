@@ -1,8 +1,6 @@
 import express from "express";
 import {
-	listTreatment,
 	treatmentId,
-	readTreatment,
 	removeTreatment,
 	updateTreatment,
 	createTreatment,
@@ -11,14 +9,14 @@ import {
 	createServiceTreatment,
 	updateServiceTreatment,
 	servicetreatmentId,
+	listServiceTreatment,
 } from "../controllers/serviceTreatmentController";
 
 import { authToken, requireSignin, isAuth, isStaff } from "../middleware/token";
 
 const router = express.Router();
 
-router.get("/list-treatment", listTreatment);
-router.get("/read-treatment/:id", readTreatment);
+router.get("/list-treatment", listServiceTreatment);
 
 // tạo treatment bao gồm cả service_id để tạo thêm bản ghi ở bảng service_treatment
 router.post(
@@ -36,7 +34,8 @@ router.put(
 	requireSignin,
 	isAuth,
 	isStaff,
-	updateTreatment
+	updateTreatment,
+	updateServiceTreatment
 );
 router.delete(
 	"/remove-treatment/:id",
@@ -49,7 +48,7 @@ router.delete(
 
 // sửa chi tiết của bảng service treatment bao gồm có thể sửa service id và treatment id
 // sẽ check nếu service id và treatment id của 1 bản ghi cùng tồn tại thì sẽ báo lỗi
-router.put("/update/treatment/detail/:detailID", updateServiceTreatment);
+// router.put("/update/treatment/detail/:detailID", updateServiceTreatment);
 
 router.param("detailID", servicetreatmentId);
 router.param("id", treatmentId);

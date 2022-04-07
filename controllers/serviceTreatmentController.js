@@ -6,6 +6,7 @@ export const listServiceTreatment = (req, res) => {
 		.sort({
 			updatedAt: -1,
 		})
+		.populate("service_id treatment_id")
 		.exec((err, data) => {
 			if (err) {
 				return res.status(500).json({ Error: err });
@@ -45,12 +46,15 @@ export const removeServiceTreatment = (req, res) => {
 export const createServiceTreatment = async (req, res) => {
 	const servicetreatment = new ServiceTreatment(req.newTreatment);
 	try {
-		const data = await servicetreatment.save();
+		const response = await servicetreatment.save();
+		const data = await response.populate("service_id treatment_id");
+
 		res.json({
 			data,
 			message: "Create service treatment successfully",
 		});
 	} catch (error) {
+		console.log(error);
 		return res.status(400).json({
 			error,
 		});
@@ -58,16 +62,22 @@ export const createServiceTreatment = async (req, res) => {
 };
 
 export const updateServiceTreatment = async (req, res) => {
-	let treatment = req.servicetreatment;
-	treatment = _.assignIn(treatment, req.body);
-	const check = await checkData(treatment);
-	if (check) {
-		return res.status(400).json({
-			error: "invalid",
-		});
-	}
+	let treatment = req.newTreatment;
+	treatment = {
+		treatment_id: treatment.data._id,
+		service_id: treatment.service_id,
+	};
+
+	const respon = await ServiceTreatment.find({
+		treatment_id: treatment.treatment_id,
+	});
+
+	treatment = _.assignIn(respon[0], treatment);
+
 	try {
-		const data = await treatment.save();
+		const result = await treatment.save();
+		const data = await result.populate("service_id treatment_id");
+
 		res.json({
 			data,
 			message: "Update succsessfully",
