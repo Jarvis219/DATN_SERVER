@@ -3,12 +3,12 @@ const { ObjectId } = mongoose.Schema;
 
 const EvaluateSchema = new mongoose.Schema(
   {
-    user: {
+    user_id: {
       type: ObjectId,
       ref: "User",
       required: true,
     },
-    product: {
+    product_id: {
       type: ObjectId,
       ref: "Product",
       required: true,
