@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel";
 const expressJwt = require("express-jwt");
 import verifyJwt from "./veryfyJwt";
+import { tokenList } from "../controllers/authControllers";
 
 export const authToken = (req, res, next) => {
 	const authorizationHeader = req.headers["authorization"];
@@ -77,7 +78,7 @@ exports.isAdmin = (req, res, next) => {
 	});
 };
 
-export const refreshToken = (req, res, next) => {
+export const refreshToken = (req, res) => {
 	const { refreshToken } = req.body;
 	if (refreshToken && refreshToken in tokenList) {
 		try {
