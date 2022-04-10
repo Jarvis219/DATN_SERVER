@@ -17,7 +17,6 @@ export const list = (req, res) => {
 };
 
 export const orderByUser = (req, res) => {
-  // console.log(req.user)
   Order.find({ user: req.user._id }, (err, orders) => {
     if (err) {
       res.status(400).json({

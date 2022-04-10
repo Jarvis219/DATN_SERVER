@@ -27,7 +27,6 @@ router.delete(
 	authToken,
 	requireSignin,
 	isAuth,
-	isStaff,
 	remove
 );
 //Cập nhật trạng thái đơn hàng
