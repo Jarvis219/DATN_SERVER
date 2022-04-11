@@ -6,7 +6,6 @@ const EmployeeJobDetailSchema = new mongoose.Schema(
     service_id: {
       type: ObjectId,
       unique: false,
-      required: true,
       ref: 'Service',
     },
     staff_id: {
