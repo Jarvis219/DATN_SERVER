@@ -17,8 +17,9 @@ export const notification = (io) => {
 							socket.broadcast.emit(`send-notification-${data.staff_id}`, noti);
 						});
 						listNotifications().then((noti) => {
-							socket.broadcast.emit(`send-notification-admin`, noti);
+							socket.emit(`send-notification-admin`, noti);
 						});
+						sendToAdmin(socket);
 					});
 					break;
 				case "list-notifications":
