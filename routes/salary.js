@@ -6,15 +6,11 @@ import {
 	removeSalary,
 	updateSalary,
 	createSalary,
-	searchSalary,
-	filterStaff,
 } from "../controllers/salaryControllers";
-import { authToken, requireSignin, isAuth, isStaff } from "../middleware/token";
+import { authToken, requireSignin, isAuth, isAdmin } from "../middleware/token";
 
 const router = express.Router();
 
-router.get("/filter-staff", filterStaff);
-router.get("/search-salary", searchSalary);
 router.get("/list-salary", listSalary);
 router.get("/read-salary/:id", readSalary);
 router.post(
@@ -22,7 +18,7 @@ router.post(
 	authToken,
 	requireSignin,
 	isAuth,
-	isStaff,
+	isAdmin,
 	createSalary
 );
 router.put(
@@ -30,7 +26,7 @@ router.put(
 	authToken,
 	requireSignin,
 	isAuth,
-	isStaff,
+	isAdmin,
 	updateSalary
 );
 router.delete(
@@ -38,7 +34,7 @@ router.delete(
 	authToken,
 	requireSignin,
 	isAuth,
-	isStaff,
+	isAdmin,
 	removeSalary
 );
 

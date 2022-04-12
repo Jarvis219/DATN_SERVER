@@ -16,7 +16,7 @@ const treatmentDetail = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		starff_id: {
+		staff_id: {
 			type: ObjectId,
 			required: true,
 			ref: "Staff",
@@ -26,6 +26,7 @@ const treatmentDetail = new mongoose.Schema(
 			required: true,
 			ref: "Customer",
 		},
+
 		status_notification: {
 			type: Number,
 			default: 0,
