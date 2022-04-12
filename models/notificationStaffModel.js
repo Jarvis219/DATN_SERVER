@@ -4,12 +4,15 @@ const NotificationStaff = new mongoose.Schema(
 	{
 		staff_id: {
 			type: ObjectId,
-			required: true,
 			ref: "Staff",
 		},
 		order_id: {
 			type: ObjectId,
 			ref: "Order",
+		},
+		user_id: {
+			type: ObjectId,
+			ref: "User",
 		},
 		path_url: {
 			type: String,
