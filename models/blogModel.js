@@ -27,6 +27,11 @@ const blogSchema = new mongoose.Schema(
 		album: {
 			type: Array,
 		},
+		active: {
+			type: Boolean,
+			required: true,
+			default: 0,
+		},
 	},
 	{ timestamps: true }
 );
