@@ -53,6 +53,7 @@ const brandRouter = require("./routes/brand");
 const treatmentRouter = require("./routes/treatment");
 const evaluateRouter = require("./routes/evaluate");
 const treatmentDetailRouter = require("./routes/treatmentDetail");
+const blogRouter = require("./routes/blog");
 
 //db connection
 mongoose
@@ -97,6 +98,7 @@ app.use("/api", detailInvoiceRouter);
 app.use("/api", employeeJobDetail);
 app.use("/api", treatmentRouter);
 app.use("/api", treatmentDetailRouter);
+app.use("/api", blogRouter);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
