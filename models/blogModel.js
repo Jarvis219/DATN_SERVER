@@ -30,7 +30,7 @@ const blogSchema = new mongoose.Schema(
 		active: {
 			type: Boolean,
 			required: true,
-			default: 0,
+			default: true,
 		},
 	},
 	{ timestamps: true }
