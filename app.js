@@ -12,23 +12,23 @@ dotenv.config();
 
 const rule = new RecurrenceRule();
 rule.dayOfWeek = [0, new Range(0, 6)];
-rule.hour = 8;
-rule.minute = 30;
+rule.hour = 10;
 rule.tz = "Asia/Ho_Chi_Minh";
 scheduleJob(rule, function () {
-  handleUpdateWorkdayHistory();
+	console.log("running");
+	handleUpdateWorkdayHistory();
 });
 
 // server with socket
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  },
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+	},
 });
 instrument(io, {
-  auth: false,
+	auth: false,
 });
 
 // Router
@@ -51,25 +51,27 @@ const orderRouter = require("./routes/order");
 const brandRouter = require("./routes/brand");
 const treatmentRouter = require("./routes/treatment");
 const evaluateRouter = require("./routes/evaluate");
+const treatmentDetailRouter = require("./routes/treatmentDetail");
+const blogRouter = require("./routes/blog");
 
 //db connection
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("DB Connected"));
+	.connect(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() => console.log("DB Connected"));
 
 mongoose.connection.on("error", (err) => {
-  console.log(`DB connection error: ${err.message}`);
+	console.log(`DB connection error: ${err.message}`);
 });
 
 // Middleware
 app.use(express.json());
 app.use(
-  cors({
-    credentials: "same-origin",
-  })
+	cors({
+		credentials: "same-origin",
+	})
 );
 
 notification(io);
@@ -94,8 +96,10 @@ app.use("/api", invoiceRouter);
 app.use("/api", detailInvoiceRouter);
 app.use("/api", employeeJobDetail);
 app.use("/api", treatmentRouter);
+app.use("/api", treatmentDetailRouter);
+app.use("/api", blogRouter);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
-  console.log(`Server is running on port : ${port}`);
+	console.log(`Server is running on port : ${port}`);
 });
