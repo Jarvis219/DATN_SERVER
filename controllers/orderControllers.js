@@ -71,13 +71,13 @@ export const remove = (req, res) => {
   });
 };
 
-export const update = (req, res) => {
+export const update = async (req, res) => {
   let order = req.order;
   order.status = req.body.status;
 
   try {
-    const dataOrder = await order.save()
-    const data = await dataOrder.populate('user', '_id name email')
+    const dataOrder = await order.save();
+    const data = await dataOrder.populate('user', '_id name email');
     return res.status(200).json({
       message: 'Update successfully!',
       data,
