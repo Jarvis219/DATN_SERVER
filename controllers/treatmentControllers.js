@@ -1,4 +1,6 @@
 import Treatment from "../models/treatmentModel";
+import TreatmentDetail from "../models/treatmentDetail";
+import ServiceTreatment from "../models/serviceTreatmentModel";
 import _ from "lodash";
 
 export const listTreatment = (req, res) => {
@@ -20,7 +22,6 @@ export const treatmentId = (req, res, next, id) => {
 			return res.status(500).json({ Error: err });
 		}
 		req.treatment = data;
-
 		next();
 	});
 };
@@ -29,8 +30,31 @@ export const readTreatment = (req, res) => {
 	return res.json(req.treatment);
 };
 
-export const removeTreatment = (req, res) => {
+const invalidTreatment = async (_id) => {
+	const ObjectId = require("mongodb").ObjectId;
+	const id = new ObjectId(_id);
+
+	try {
+		const curr1 = await TreatmentDetail.findOne({ treatment_id: id });
+		const curr2 = await ServiceTreatment.findOne({ treatment_id: id });
+		if (curr1 || curr2) {
+			return false;
+		}
+		return true;
+	} catch (error) {
+		return true;
+	}
+};
+
+export const removeTreatment = async (req, res) => {
 	let treatment = req.treatment;
+	const check = await invalidTreatment(treatment._id);
+	if (!check) {
+		return res.status(400).json({
+			error: "Vui lòng xóa những trường liên quan",
+		});
+	}
+
 	treatment.remove((err) => {
 		if (err) {
 			return res.status(400).json({
