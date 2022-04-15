@@ -1,14 +1,14 @@
-import mongoose from "mongoose";
-import crypto from "crypto";
-import { v4 as uuidv4 } from "uuid";
-const beautifyUnique = require("mongoose-beautiful-unique-validation");
+import mongoose from 'mongoose';
+import crypto from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
+const beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 const UserSchema = new mongoose.Schema(
   {
     email: {
       type: String,
       trim: true,
-      default: "email" + uuidv4(),
+      default: 'email' + uuidv4(),
     },
     uid: {
       required: true,
@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
       maxLength: 50,
-      default: "guest",
+      default: 'guest',
     },
     photoURL: {
       type: String,
@@ -32,11 +32,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       trim: true,
       maxLength: 15,
-      default: "Chưa cập nhật",
+      default: 'Chưa cập nhật',
     },
     role: {
       type: Number,
-      default: 5,
+      default: 4,
     },
     address: {
       type: String,
@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema(
 UserSchema.plugin(beautifyUnique);
 
 // xử lý password truyền vào  mã hóa gán cho hashed_password
-UserSchema.virtual("password").set(function (password) {
+UserSchema.virtual('password').set(function (password) {
   this.salt = uuidv4();
   this.hashed_password = this.encrytPassword(password);
 });
@@ -72,16 +72,16 @@ UserSchema.methods = {
     return this.encrytPassword(plainText) === this.hashed_password;
   },
   encrytPassword: function (password) {
-    if (!password) return "";
+    if (!password) return '';
     try {
       return crypto
-        .createHmac("sha1", this.salt)
+        .createHmac('sha1', this.salt)
         .update(password)
-        .digest("hex");
+        .digest('hex');
     } catch (error) {
-      return "";
+      return '';
     }
   },
 };
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);
