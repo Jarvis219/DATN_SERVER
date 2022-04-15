@@ -12,7 +12,7 @@ const treatmentDetail = new mongoose.Schema(
 			required: true,
 			default: 0,
 		},
-		treaterments_detail_date: {
+		treatments_detail_date: {
 			type: String,
 			required: true,
 		},
