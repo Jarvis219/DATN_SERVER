@@ -71,15 +71,20 @@ export const remove = (req, res) => {
   });
 };
 
-export const update = (req, res) => {
-  const order = req.order;
+export const update = async (req, res) => {
+  let order = req.order;
   order.status = req.body.status;
-  order.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Cập nhật đơn hàng không thành công!',
-      });
-    }
-    res.json(data);
-  });
+
+  try {
+    const dataOrder = await order.save();
+    const data = await dataOrder.populate('user', '_id name email');
+    return res.status(200).json({
+      message: 'Update successfully!',
+      data,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error: 'Update failed!',
+    });
+  }
 };
