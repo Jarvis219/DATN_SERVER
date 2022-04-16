@@ -75,6 +75,7 @@ export const removeEmployeeJobDetail = (req, res) => {
 export const updateEmployeeJobDetail = async (req, res) => {
   let employeeJobDetail = req.employeeJobDetail;
   employeeJobDetail = _.assignIn(employeeJobDetail, req.body);
+  employeeJobDetail.schedule = req.body.schedule;
   employeeJobDetail = new EmployeeJobDetail(employeeJobDetail);
   try {
     const current = await employeeJobDetail.save();
