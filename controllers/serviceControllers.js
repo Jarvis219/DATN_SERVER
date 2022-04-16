@@ -6,7 +6,7 @@ export const listService = (req, res) => {
     .sort({
       updatedAt: -1,
     })
-    .populate([{ path: 'category_id' }, { path: 'brand_id' }])
+    .populate([{ path: 'category_id' }])
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({ error: err });
