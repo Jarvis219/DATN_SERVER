@@ -1,4 +1,4 @@
-import Evaluate from "../models/brandModel";
+import Evaluate from "../models/evaluateModel";
 import _ from "lodash";
 
 export const listEvaluates = (req, res) => {
