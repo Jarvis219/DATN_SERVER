@@ -85,6 +85,6 @@ export const listEvaluateByProduct = (req, res) => {
         error: "Evaluates not found!",
       });
     }
-    res.json(data);
+    res.json({ data });
   });
 };
