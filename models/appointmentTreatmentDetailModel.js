@@ -1,18 +1,13 @@
 import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema;
-const treatmentDetail = new mongoose.Schema(
+const appointmentTreatmentDetail = new mongoose.Schema(
 	{
-		treatment_id: {
-			type: ObjectId,
-			required: true,
-			ref: "Treatment",
-		},
 		status: {
 			type: Number,
 			required: true,
 			default: 0,
 		},
-		treatments_detail_date: {
+		date: {
 			type: String,
 			required: true,
 		},
@@ -21,24 +16,22 @@ const treatmentDetail = new mongoose.Schema(
 			required: true,
 			ref: "Staff",
 		},
-		customer_id: {
+		appointment_treatment_id: {
 			type: ObjectId,
 			required: true,
-			ref: "Customer",
+			ref: "AppointmentTreatment",
 		},
-
-		status_notification: {
-			type: Number,
-			default: 0,
-			required: true,
-		},
-		description: {
+		note: {
 			type: String,
 		},
 		number_treatment: {
 			type: Number,
 			required: true,
-			default: 0,
+			default: 1,
+		},
+		notification: {
+			type: Boolean,
+			default: false,
 		},
 	},
 	{
@@ -46,4 +39,7 @@ const treatmentDetail = new mongoose.Schema(
 	}
 );
 
-module.exports = mongoose.model("TreatmentDetail", treatmentDetail);
+module.exports = mongoose.model(
+	"AppointmentTreatmentDetail",
+	appointmentTreatmentDetail
+);

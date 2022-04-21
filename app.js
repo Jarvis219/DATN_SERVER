@@ -52,8 +52,9 @@ const orderRouter = require('./routes/order');
 const brandRouter = require('./routes/brand');
 const treatmentRouter = require('./routes/treatment');
 const evaluateRouter = require('./routes/evaluate');
-const treatmentDetailRouter = require('./routes/treatmentDetail');
+const treatmentDetailRouter = require('./routes/appointmentTreatment');
 const blogRouter = require('./routes/blog');
+const appointmentTreatmentDetail = require('./routes/appointmentTreatmentDetail');
 
 //db connection
 mongoose
@@ -99,6 +100,7 @@ app.use('/api', employeeJobDetail);
 app.use('/api', treatmentRouter);
 app.use('/api', treatmentDetailRouter);
 app.use('/api', blogRouter);
+app.use('/api', appointmentTreatmentDetail);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
