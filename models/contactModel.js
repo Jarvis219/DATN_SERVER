@@ -4,11 +4,11 @@ const Contact = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      maxLength: 50,
+      maxLength: 100,
     },
     email: {
       type: String,
-      maxLength: 50,
+      maxLength: 100,
     },
     phone: {
       type: String,
@@ -17,11 +17,9 @@ const Contact = new mongoose.Schema(
     content: {
       type: String,
       required: true,
-      maxLength: 500,
     },
     content_confirm: {
       type: String,
-      maxLength: 500,
     },
     status: {
       type: Number,

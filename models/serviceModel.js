@@ -27,7 +27,7 @@ const ServiceSchema = new mongoose.Schema(
     service_description: {
       type: String,
       required: true,
-      maxLength: 300,
+      maxLength: 500,
     },
     service_content: {
       type: String,

@@ -1,5 +1,6 @@
 import Evaluate from "../models/evaluateModel";
 import _ from "lodash";
+import Product from "../models/productModel";
 
 export const listEvaluates = (req, res) => {
   Evaluate.find()
@@ -24,6 +25,7 @@ export const createEvaluate = (req, res) => {
         error: "Add evaluate failed!",
       });
     }
+    getEvaluateByProduct(data.product_id);
     res.json({
       data,
       message: "Create evaluate successfully",
@@ -87,4 +89,23 @@ export const listEvaluateByProduct = (req, res) => {
     }
     res.json({ data });
   });
+};
+
+const getEvaluateByProduct = async (id) => {
+  const listEvaluates = await Evaluate.find({ product_id: id });
+
+  let averageStar =
+    listEvaluates.reduce(
+      (previousValue, currentValue) => previousValue + currentValue.star,
+      0
+    ) / listEvaluates.length;
+  averageStar = Math.round(averageStar);
+  updateProduct(id, {
+    product_star: averageStar,
+  });
+};
+const updateProduct = async (id, data) => {
+  let product = await Product.find({ _id: id });
+  product[0]["product_star"] = data.product_star;
+  product[0].save();
 };

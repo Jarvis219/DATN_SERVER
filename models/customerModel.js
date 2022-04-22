@@ -9,7 +9,7 @@ const CustomerSchema = new mongoose.Schema(
 		},
 		customer_email: {
 			type: String,
-			maxLength: 50,
+			maxLength: 100,
 		},
 		customer_phone: {
 			type: String,
@@ -25,7 +25,6 @@ const CustomerSchema = new mongoose.Schema(
 		},
 		customer_description: {
 			type: String,
-			maxLength: 1000,
 		},
 		// 0 nam | 1 nữ
 		customer_gender: {

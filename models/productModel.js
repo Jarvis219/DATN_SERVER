@@ -6,23 +6,19 @@ const ProductSchema = new mongoose.Schema(
     product_name: {
       type: String,
       required: true,
-      maxLength: 100,
     },
     product_amount: {
       type: Number,
       required: true,
-      maxLength: 21,
     },
     product_price: {
       type: Number,
       required: true,
-      maxLength: 21,
     },
     product_sale: {
       type: Number,
       required: true,
       default: 0,
-      maxLength: 21,
     },
     product_star: {
       type: Number,
@@ -33,7 +29,6 @@ const ProductSchema = new mongoose.Schema(
     product_description: {
       type: String,
       required: true,
-      maxLength: 300,
       default: 'Đang cập nhật',
     },
     product_content: {
