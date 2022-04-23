@@ -34,7 +34,6 @@ const treatmentSchema = new mongoose.Schema(
     },
     treatment_description: {
       type: String,
-      maxlength: 500,
     },
     album: {
       type: Array,
