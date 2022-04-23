@@ -69,7 +69,6 @@ export const removeProduct = (req, res) => {
 
 export const updateProduct = async (req, res) => {
   let product = req.product;
-  console.log("product: ", product);
   product = _.assignIn(product, req.body);
 
   try {
