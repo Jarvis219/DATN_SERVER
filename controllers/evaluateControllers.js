@@ -81,14 +81,16 @@ export const updateEvaluate = (req, res) => {
 };
 
 export const listEvaluateByProduct = (req, res) => {
-  Evaluate.find({ product_id: req.product._id }).exec((err, data) => {
-    if (err) {
-      res.status(400).json({
-        error: "Evaluates not found!",
-      });
-    }
-    res.json({ data });
-  });
+  Evaluate.find({ product_id: req.product._id })
+    .populate({ path: "user_id" })
+    .exec((err, data) => {
+      if (err) {
+        res.status(400).json({
+          error: "Evaluates not found!",
+        });
+      }
+      res.json({ data });
+    });
 };
 
 const getEvaluateByProduct = async (id) => {
