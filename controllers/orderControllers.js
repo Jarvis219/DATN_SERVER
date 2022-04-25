@@ -17,14 +17,19 @@ export const list = (req, res) => {
 };
 
 export const orderByUser = (req, res) => {
-  Order.find({ user: req.user._id }, (err, orders) => {
-    if (err) {
-      res.status(400).json({
-        error: "Orders not found",
-      });
-    }
-    res.json(orders);
-  });
+  Order.find({ user: req.user._id })
+    .sort({
+      updatedAt: -1,
+    })
+    .populate("user", "_id name email")
+    .exec((err, orders) => {
+      if (err) {
+        res.status(400).json({
+          error: "Order not found",
+        });
+      }
+      res.json(orders);
+    });
 };
 
 export const create = (req, res) => {
