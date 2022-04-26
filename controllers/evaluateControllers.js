@@ -1,6 +1,6 @@
-import Evaluate from "../models/evaluateModel";
-import _ from "lodash";
-import Product from "../models/productModel";
+import Evaluate from '../models/evaluateModel';
+import _ from 'lodash';
+import Product from '../models/productModel';
 
 export const listEvaluates = (req, res) => {
   Evaluate.find()
@@ -10,7 +10,7 @@ export const listEvaluates = (req, res) => {
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({
-          error: "Evaluate not found!",
+          error: 'Evaluate not found!',
         });
       }
       res.status(200).json({ data });
@@ -22,13 +22,13 @@ export const createEvaluate = (req, res) => {
   evaluate.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Add evaluate failed!",
+        error: 'Add evaluate failed!',
       });
     }
     getEvaluateByProduct(data.product_id);
     res.json({
       data,
-      message: "Create evaluate successfully",
+      message: 'Create evaluate successfully',
     });
   });
 };
@@ -37,7 +37,7 @@ export const evaluateId = (req, res, next, id) => {
   Evaluate.findById(id).exec((err, data) => {
     if (err) {
       return res.status(404).json({
-        error: "Evaluate not found!",
+        error: 'Evaluate not found!',
       });
     }
     req.evaluate = data;
@@ -54,11 +54,11 @@ export const removeEvaluate = (req, res) => {
   evaluate.remove((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Delete evaluate failed!",
+        error: 'Delete evaluate failed!',
       });
     }
     res.json({
-      message: "Delete evaluate successfully",
+      message: 'Delete evaluate successfully',
       data,
     });
   });
@@ -70,11 +70,11 @@ export const updateEvaluate = (req, res) => {
   evaluate.save((err, data) => {
     if (err) {
       return res.status(400).json({
-        error: "Update evaluate failed!",
+        error: 'Update evaluate failed!',
       });
     }
     res.json({
-      message: "Update evaluate successfully",
+      message: 'Update evaluate successfully',
       data,
     });
   });
@@ -84,7 +84,7 @@ export const listEvaluateByProduct = (req, res) => {
   Evaluate.find({ product_id: req.product._id }).exec((err, data) => {
     if (err) {
       res.status(400).json({
-        error: "Evaluates not found!",
+        error: 'Evaluates not found!',
       });
     }
     res.json({ data });
@@ -106,6 +106,6 @@ const getEvaluateByProduct = async (id) => {
 };
 const updateProduct = async (id, data) => {
   let product = await Product.find({ _id: id });
-  product[0]["product_star"] = data.product_star;
+  product[0]['product_star'] = data.product_star;
   product[0].save();
 };

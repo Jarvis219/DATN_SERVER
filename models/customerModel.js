@@ -47,8 +47,8 @@ const CustomerSchema = new mongoose.Schema(
      */
     customer_type: {
       required: true,
-      type: Number,
-      default: 0,
+      type: Array,
+      default: [],
     },
     counts: {
       type: Number,
