@@ -1,29 +1,33 @@
 import express from "express";
 import {
-	listAppointment,
-	appointmentId,
-	readAppointment,
-	removeAppointment,
-	updateAppointment,
-	createAppointment,
+  appointmentByPhone,
+  appointmentId,
+  createAppointment,
+  listAppointment,
+  readAppointment,
+  removeAppointment,
+  updateAppointment,
 } from "../controllers/appointmentControllers";
-import { authToken, requireSignin, isAuth, isStaff } from "../middleware/token";
+import { userId } from "../controllers/userControllers";
+import { authToken, isAuth, isStaff, requireSignin } from "../middleware/token";
 
 const router = express.Router();
 
 router.get("/list-appointment", listAppointment);
+router.get("/list-appointment-by-phone", appointmentByPhone);
 router.get("/read-appointment/:id", readAppointment);
 router.post("/create-appointment", createAppointment);
 router.put("/update-appointment/:id", updateAppointment);
 router.delete(
-	"/remove-appointment/:id",
-	authToken,
-	requireSignin,
-	isAuth,
-	isStaff,
-	removeAppointment
+  "/remove-appointment/:id",
+  authToken,
+  requireSignin,
+  isAuth,
+  isStaff,
+  removeAppointment
 );
 
 router.param("id", appointmentId);
+router.param("userId", userId);
 
 module.exports = router;
