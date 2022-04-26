@@ -6,8 +6,9 @@ export const listAppointmentTreatmentDetail = (req, res) => {
     .populate([
       {
         path: 'appointment_treatment_id',
-        populate: { path: 'customer_id', path: 'treatment_id' },
+        populate: 'customer_id treatment_id',
       },
+
       { path: 'staff_id', populate: { path: 'user_id' } },
     ])
     .sort({
@@ -17,6 +18,7 @@ export const listAppointmentTreatmentDetail = (req, res) => {
       if (err) {
         return res.status(500).json({ Error: err });
       }
+
       return res.status(200).json({ data });
     });
 };
@@ -26,7 +28,7 @@ export const treatmentId = (req, res, next, id) => {
     .populate([
       {
         path: 'appointment_treatment_id',
-        populate: { path: 'customer_id', path: 'treatment_id' },
+        populate: 'customer_id treatment_id',
       },
       { path: 'staff_id', populate: { path: 'user_id' } },
     ])
@@ -65,7 +67,7 @@ export const createAppointmentTreatmentDetail = async (req, res) => {
     const data = await curr.populate([
       {
         path: 'appointment_treatment_id',
-        populate: { path: 'customer_id', path: 'treatment_id' },
+        populate: 'customer_id treatment_id',
       },
       { path: 'staff_id', populate: { path: 'user_id' } },
     ]);
@@ -89,7 +91,7 @@ export const updateAppointmentTreatmentDetail = async (req, res) => {
     const data = await curr.populate([
       {
         path: 'appointment_treatment_id',
-        populate: { path: 'customer_id', path: 'treatment_id' },
+        populate: 'customer_id treatment_id',
       },
       { path: 'staff_id', populate: { path: 'user_id' } },
     ]);

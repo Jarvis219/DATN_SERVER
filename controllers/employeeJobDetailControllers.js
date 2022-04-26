@@ -134,21 +134,25 @@ export const findStaffToId = (req, res, next) => {
   });
 };
 
-export const updateSchedule = (req, res) => {
+export const updateSchedule = async (req, res) => {
   let employeeJobDetail = req.updateEmployee;
   employeeJobDetail = Object.assign(employeeJobDetail, {
     schedule: [...employeeJobDetail.schedule, req.body.schedule],
   });
 
-  employeeJobDetail.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Update employee job detail failed!',
-      });
-    }
-    res.json({
+  try {
+    const current = await employeeJobDetail.save();
+    const data = await current.populate([
+      { path: 'service_id' },
+      { path: 'staff_id', populate: { path: 'user_id' } },
+    ]);
+    return res.json({
       message: 'Update employee job detail successfully',
       data,
     });
-  });
+  } catch (err) {
+    return res.status(400).json({
+      error: 'Update employee job detail failed!',
+    });
+  }
 };
