@@ -1,18 +1,24 @@
-import express from 'express';
+import express from "express";
 import {
   listTreatmentAppointment,
   treatmentId,
   removeTreatmentAppointment,
   updateTreatmentAppointment,
   createTreatmentAppointment,
-} from '../controllers/appointmentTreatmentControllers';
-import { authToken, requireSignin, isAuth, isStaff } from '../middleware/token';
+  appointmentTreatmentByCustomer,
+} from "../controllers/appointmentTreatmentControllers";
+import { customerId } from "../controllers/customerControllers";
+import { authToken, requireSignin, isAuth, isStaff } from "../middleware/token";
 
 const router = express.Router();
 
-router.get('/list/appointment/treatment', listTreatmentAppointment);
+router.get("/list/appointment/treatment", listTreatmentAppointment);
+router.get(
+  "/list-appointment-treatment/:customer_id",
+  appointmentTreatmentByCustomer
+);
 router.post(
-  '/create/appointment/treatment',
+  "/create/appointment/treatment",
   authToken,
   requireSignin,
   isAuth,
@@ -20,7 +26,7 @@ router.post(
   createTreatmentAppointment
 );
 router.put(
-  '/update/appointment/treatment/:id',
+  "/update/appointment/treatment/:id",
   authToken,
   requireSignin,
   isAuth,
@@ -28,7 +34,7 @@ router.put(
   updateTreatmentAppointment
 );
 router.delete(
-  '/remove/appointment/treatment/:id',
+  "/remove/appointment/treatment/:id",
   authToken,
   requireSignin,
   isAuth,
@@ -36,6 +42,7 @@ router.delete(
   removeTreatmentAppointment
 );
 
-router.param('id', treatmentId);
+router.param("id", treatmentId);
+router.param("customer_id", customerId);
 
 module.exports = router;
