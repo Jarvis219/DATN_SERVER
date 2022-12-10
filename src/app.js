@@ -6,6 +6,8 @@ import { notification } from './controllers/socket';
 import { scheduleJob, RecurrenceRule, Range } from 'node-schedule-tz';
 import { handleUpdateWorkdayHistory } from './controllers/handleUpdateWorkdayHistory';
 const { instrument } = require('@socket.io/admin-ui');
+require('babel-core/register');
+require('babel-polyfill');
 
 const app = express();
 dotenv.config();
@@ -16,19 +18,19 @@ rule.hour = 1;
 rule.minute = 10;
 rule.tz = 'Asia/Ho_Chi_Minh';
 scheduleJob(rule, function () {
-  handleUpdateWorkdayHistory();
+	handleUpdateWorkdayHistory();
 });
 
 // server with socket
 const server = require('http').Server(app);
 const io = require('socket.io')(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  },
+	cors: {
+		origin: '*',
+		methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+	},
 });
 instrument(io, {
-  auth: false,
+	auth: false,
 });
 
 // Router
@@ -57,22 +59,22 @@ const appointmentTreatmentDetail = require('./routes/appointmentTreatmentDetail'
 
 //db connection
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log('DB Connected'));
+	.connect(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() => console.log('DB Connected'));
 
 mongoose.connection.on('error', (err) => {
-  console.log(`DB connection error: ${err.message}`);
+	console.log(`DB connection error: ${err.message}`);
 });
 
 // Middleware
 app.use(express.json());
 app.use(
-  cors({
-    credentials: 'same-origin',
-  })
+	cors({
+		credentials: 'same-origin',
+	})
 );
 
 notification(io);
@@ -104,5 +106,5 @@ app.use('/api', appointmentTreatmentDetail);
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
-  console.log(`Server is running on port : ${port}`);
+	console.log(`Server is running on port : ${port}`);
 });
